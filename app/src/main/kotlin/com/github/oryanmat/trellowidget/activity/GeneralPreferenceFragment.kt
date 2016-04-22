@@ -7,6 +7,7 @@ import android.preference.PreferenceFragment
 import android.preference.SwitchPreference
 import android.support.annotation.IdRes
 import com.github.oryanmat.trellowidget.R
+import com.github.oryanmat.trellowidget.TrelloWidget
 import com.github.oryanmat.trellowidget.util.color.ColorPreference
 import com.github.oryanmat.trellowidget.widget.updateWidgets
 import com.github.oryanmat.trellowidget.widget.updateWidgetsData
@@ -28,6 +29,7 @@ class GeneralPreferenceFragment : PreferenceFragment() {
         listener.onSharedPreferenceChanged(preferences, getString(R.string.pref_title_use_unique_color_key))
         listener.onSharedPreferenceChanged(preferences, getString(R.string.pref_update_interval_key))
         listener.onSharedPreferenceChanged(preferences, getString(R.string.pref_display_board_name_key))
+        listener.onSharedPreferenceChanged(preferences, getString(R.string.pref_ui_theme_dark_key))
 
         val titleBackgroundPref = colorPreference(R.string.pref_title_back_color_key)
         titleBackgroundPref.copyData = colorPreference(R.string.pref_back_color_key).asColorData()
@@ -79,6 +81,12 @@ class GeneralPreferenceFragment : PreferenceFragment() {
         } else if (key == getString(R.string.pref_display_board_name_key)) {
             val preference = findPreference(key) as SwitchPreference
             preference.summary = activity.getString(R.string.pref_display_board_name_desc)
+        } else if (key == getString(R.string.pref_ui_theme_dark_key)) {
+            val app = activity.application as TrelloWidget
+            val changed = app.loadThemes()
+            if (changed) {
+                activity.recreate()
+            }
         }
     }
 

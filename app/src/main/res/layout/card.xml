@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:id="@+id/card">
+    android:id="@+id/card"
+    style="@android:style/Theme.DeviceDefault">
 
     <LinearLayout
         android:id="@+id/labels_layout"

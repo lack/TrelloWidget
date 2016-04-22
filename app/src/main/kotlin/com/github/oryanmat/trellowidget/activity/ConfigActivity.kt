@@ -16,6 +16,7 @@ import com.android.volley.Response
 import com.android.volley.VolleyError
 import com.github.oryanmat.trellowidget.R
 import com.github.oryanmat.trellowidget.T_WIDGET
+import com.github.oryanmat.trellowidget.TrelloWidget
 import com.github.oryanmat.trellowidget.model.Board
 import com.github.oryanmat.trellowidget.model.BoardList
 import com.github.oryanmat.trellowidget.model.BoardList.Companion.BOARD_LIST_TYPE
@@ -31,6 +32,8 @@ class ConfigActivity : Activity(), OnItemSelectedAdapter, Response.Listener<Stri
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val app = application as TrelloWidget
+        setTheme(app.dialogTheme)
         setContentView(R.layout.activity_config)
         setWidgetId()
         dialog.show()
