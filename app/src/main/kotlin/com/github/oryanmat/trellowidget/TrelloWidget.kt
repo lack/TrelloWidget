@@ -6,6 +6,7 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.StrictMode
+import android.preference.PreferenceManager
 import com.github.oryanmat.trellowidget.util.TrelloAPIUtil
 import com.github.oryanmat.trellowidget.util.isDarkThemeEnabled
 import com.github.oryanmat.trellowidget.util.getInterval
@@ -22,6 +23,7 @@ class TrelloWidget : Application() {
     override fun onCreate() {
         if (DEBUG) StrictMode.enableDefaults()
         super.onCreate()
+        PreferenceManager.setDefaultValues(applicationContext, R.xml.pref_general, false)
         loadThemes()
         TrelloAPIUtil.init(applicationContext)
         Executors.callable { scheduleAlarm(this@TrelloWidget) }.call()

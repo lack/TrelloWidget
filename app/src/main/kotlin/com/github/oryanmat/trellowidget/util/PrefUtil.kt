@@ -3,57 +3,61 @@ package com.github.oryanmat.trellowidget.util
 import android.content.Context
 import android.preference.PreferenceManager.getDefaultSharedPreferences
 import android.support.annotation.ColorInt
+import android.support.annotation.StringRes
 import com.github.oryanmat.trellowidget.R
 
 internal fun Context.getPrefTextScale() =
-        java.lang.Float.parseFloat(sharedPreferences().getString(
-                getString(R.string.pref_text_size_key),
-                getString(R.string.pref_text_size_default)))
+        java.lang.Float.parseFloat(getStringPref(R.string.pref_text_size_key))
 
 internal fun Context.getInterval() =
-        Integer.parseInt(sharedPreferences().getString(
-                getString(R.string.pref_update_interval_key),
-                getString(R.string.pref_update_interval_default)))
+        Integer.parseInt(getStringPref(R.string.pref_update_interval_key))
 
-internal @ColorInt fun Context.getCardBackgroundColor() = getColor(
-        getString(R.string.pref_back_color_key),
-        resources.getInteger(R.integer.pref_back_color_default))
+internal @ColorInt fun Context.getCardBackgroundColor() =
+        getColorPref(R.string.pref_back_color_key)
 
-internal @ColorInt fun Context.getCardForegroundColor() = getColor(
-        getString(R.string.pref_fore_color_key),
-        resources.getInteger(R.integer.pref_fore_color_default))
+internal @ColorInt fun Context.getCardForegroundColor() =
+        getColorPref(R.string.pref_fore_color_key)
 
-internal fun Context.displayBoardName() = sharedPreferences().getBoolean(
-        getString(R.string.pref_display_board_name_key),
-        resources.getBoolean(R.bool.pref_display_board_name_default))
+internal fun Context.displayBoardName() =
+        isEnabled(R.string.pref_display_board_name_key)
 
-internal fun Context.isTitleUniqueColor() = sharedPreferences().getBoolean(
-        getString(R.string.pref_title_use_unique_color_key),
-        resources.getBoolean(R.bool.pref_title_use_unique_color_default))
+internal fun Context.isTitleUniqueColor() =
+        isEnabled(R.string.pref_title_use_unique_color_key)
+
+internal fun Context.isTitleEnabled() =
+        isEnabled(R.string.pref_title_onclick_key)
+
+internal fun Context.showAddButton() =
+        isEnabled(R.string.pref_add_button_key)
+
+internal fun Context.showRefreshButton() =
+        isEnabled(R.string.pref_refresh_button_key)
+
+internal fun Context.showConfigButton() =
+        isEnabled(R.string.pref_config_button_key)
 
 internal @ColorInt fun Context.getTitleBackgroundColor(): Int = when {
-    isTitleUniqueColor() -> getColor(
-            getString(R.string.pref_title_back_color_key),
-            resources.getInteger(R.integer.pref_title_back_color_default))
+    isTitleUniqueColor() -> getColorPref(R.string.pref_title_back_color_key)
     else -> getCardBackgroundColor()
 }
 
 internal @ColorInt fun Context.getTitleForegroundColor(): Int = when {
-    isTitleUniqueColor() -> getColor(
-            getString(R.string.pref_title_fore_color_key),
-            resources.getInteger(R.integer.pref_title_fore_color_default))
+    isTitleUniqueColor() -> getColorPref(R.string.pref_title_fore_color_key)
     else -> getCardForegroundColor()
 }
 
-private @ColorInt fun Context.getColor(key: String, defValue: Int) =
-        sharedPreferences().getInt(key, defValue)
-
-internal fun Context.isTitleEnabled() = sharedPreferences().getBoolean(
-        getString(R.string.pref_title_onclick_key),
-        resources.getBoolean(R.bool.pref_title_onclick_default))
-
-internal fun Context.isDarkThemeEnabled() = sharedPreferences().getBoolean(
-        getString(R.string.pref_ui_theme_dark_key),
-        resources.getBoolean(R.bool.pref_ui_theme_dark_default))
+internal fun Context.isDarkThemeEnabled() =
+        isEnabled(R.string.pref_ui_theme_dark_key)
 
 private fun Context.sharedPreferences() = getDefaultSharedPreferences(this)
+
+// Note: Because 'setDefaultValues' is called in TrelloWidget.onCreate we can rely on all values already being set
+// IE the 'defValue' part of these get*() calls are never returned
+private fun Context.isEnabled(@StringRes key: Int) =
+        sharedPreferences().getBoolean(getString(key), true)
+
+private @ColorInt fun Context.getColorPref(@StringRes key: Int) =
+        sharedPreferences().getInt(getString(key), 0)
+
+private fun Context.getStringPref(@StringRes key: Int) =
+        sharedPreferences().getString(getString(key), "")

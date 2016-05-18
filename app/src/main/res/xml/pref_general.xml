@@ -57,10 +57,28 @@
             android:title="@string/pref_update_interval_title" />
 
         <SwitchPreference
-            android:defaultValue="true"
+            android:defaultValue="@bool/pref_title_onclick_default"
             android:key="@string/pref_title_onclick_key"
             android:summary="@string/pref_title_onclick_desc"
             android:title="@string/pref_title_onclick_title" />
+
+        <SwitchPreference
+            android:defaultValue="@bool/pref_add_button_default"
+            android:key="@string/pref_add_button_key"
+            android:summary="@string/pref_add_button_desc"
+            android:title="@string/pref_add_button_title" />
+
+        <SwitchPreference
+            android:defaultValue="@bool/pref_config_button_default"
+            android:key="@string/pref_config_button_key"
+            android:summary="@string/pref_config_button_desc"
+            android:title="@string/pref_config_button_title" />
+
+        <SwitchPreference
+            android:defaultValue="@bool/pref_refresh_button_default"
+            android:key="@string/pref_refresh_button_key"
+            android:summary="@string/pref_refresh_button_desc"
+            android:title="@string/pref_refresh_button_title" />
 
     </PreferenceCategory>
     <PreferenceCategory

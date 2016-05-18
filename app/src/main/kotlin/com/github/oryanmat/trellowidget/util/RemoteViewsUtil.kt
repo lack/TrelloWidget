@@ -5,12 +5,10 @@ import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.Color.*
 import android.graphics.drawable.BitmapDrawable
-import android.support.annotation.ColorInt
-import android.support.annotation.DimenRes
-import android.support.annotation.DrawableRes
-import android.support.annotation.IdRes
+import android.support.annotation.*
 import android.support.v4.content.ContextCompat
 import android.util.TypedValue
+import android.view.View
 import android.widget.RemoteViews
 
 object RemoteViewsUtil {
@@ -61,4 +59,8 @@ object RemoteViewsUtil {
         val prefTextScale = context.getPrefTextScale()
         return dimension * prefTextScale / density
     }
+
+    fun optionallyHideView(views: RemoteViews, @IdRes viewId: Int, show: Boolean) =
+            views.setViewVisibility(viewId, (if (show) View.VISIBLE else View.GONE))
+
 }
