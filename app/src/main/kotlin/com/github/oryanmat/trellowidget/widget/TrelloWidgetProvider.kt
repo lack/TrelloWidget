@@ -10,8 +10,6 @@ import android.support.annotation.ColorInt
 import android.view.View
 import android.widget.RemoteViews
 import com.github.oryanmat.trellowidget.R
-import com.github.oryanmat.trellowidget.activity.AddCardActivity
-import com.github.oryanmat.trellowidget.activity.ConfigActivity
 import com.github.oryanmat.trellowidget.model.Board
 import com.github.oryanmat.trellowidget.util.*
 import com.github.oryanmat.trellowidget.util.RemoteViewsUtil.setBackgroundColor
@@ -20,9 +18,9 @@ import com.github.oryanmat.trellowidget.util.RemoteViewsUtil.setImageViewColor
 import com.github.oryanmat.trellowidget.util.RemoteViewsUtil.setTextView
 import com.github.oryanmat.trellowidget.util.color.lightDim
 
-private val ADD_ACTION = "com.github.oryanmat.trellowidget.addAction"
-private val REFRESH_ACTION = "com.github.oryanmat.trellowidget.refreshAction"
-private val WIDGET_ID = "com.github.oryanmat.trellowidget.widgetId"
+val ADD_ACTION = "com.github.oryanmat.trellowidget.addAction"
+val REFRESH_ACTION = "com.github.oryanmat.trellowidget.refreshAction"
+val WIDGET_ID = "com.github.oryanmat.trellowidget.widgetId"
 private val TRELLO_PACKAGE_NAME = "com.trello"
 private val TRELLO_URL = "https://www.trello.com"
 
@@ -88,29 +86,23 @@ class TrelloWidgetProvider : AppWidgetProvider() {
     }
 
     private fun getAddPendingIntent(context: Context, appWidgetId: Int): PendingIntent {
-        val addIntent = Intent(context, AddCardActivity::class.java)
-        addIntent.action = ADD_ACTION
-        addIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
+        val addIntent = context.createAddCardIntent(appWidgetId)
         return PendingIntent.getActivity(context, appWidgetId, addIntent, 0)
     }
 
     private fun getRefreshPendingIntent(context: Context, appWidgetId: Int): PendingIntent {
-        val refreshIntent = Intent(context, TrelloWidgetProvider::class.java)
-        refreshIntent.action = REFRESH_ACTION
-        refreshIntent.putExtra(WIDGET_ID, appWidgetId)
+        val refreshIntent = context.createRefreshIntent(appWidgetId)
         return PendingIntent.getBroadcast(context, appWidgetId, refreshIntent, 0)
     }
 
     private fun getReconfigPendingIntent(context: Context, appWidgetId: Int): PendingIntent {
-        val reconfigIntent = Intent(context, ConfigActivity::class.java)
-        reconfigIntent.action = AppWidgetManager.ACTION_APPWIDGET_CONFIGURE
-        reconfigIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
+        val reconfigIntent = context.createReconfigureIntent(appWidgetId)
         return PendingIntent.getActivity(context, appWidgetId, reconfigIntent, 0)
     }
 
     private fun getCardPendingIntent(context: Context): PendingIntent {
         // individual card URIs are set in a RemoteViewsFactory.setOnClickFillInIntent
-        return PendingIntent.getActivity(context, 0, Intent(Intent.ACTION_VIEW), 0)
+        return context.createViewCardIntentTemplate()
     }
 
     private fun getTitleIntent(context: Context, board: Board): PendingIntent {
