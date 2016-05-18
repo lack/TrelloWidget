@@ -17,6 +17,7 @@ import com.github.oryanmat.trellowidget.util.RemoteViewsUtil.setImage
 import com.github.oryanmat.trellowidget.util.RemoteViewsUtil.setImageViewColor
 import com.github.oryanmat.trellowidget.util.RemoteViewsUtil.setTextView
 import com.github.oryanmat.trellowidget.util.color.lightDim
+import com.github.oryanmat.trellowidget.util.RemoteViewsUtil.optionallyHideView
 
 val ADD_ACTION = "com.github.oryanmat.trellowidget.addAction"
 val REFRESH_ACTION = "com.github.oryanmat.trellowidget.refreshAction"
@@ -66,6 +67,9 @@ class TrelloWidgetProvider : AppWidgetProvider() {
         views.setOnClickPendingIntent(R.id.addButton, getAddPendingIntent(context, appWidgetId))
         views.setOnClickPendingIntent(R.id.refreshButt, getRefreshPendingIntent(context, appWidgetId))
         views.setOnClickPendingIntent(R.id.configButt, getReconfigPendingIntent(context, appWidgetId))
+        optionallyHideView(views, R.id.addButton, context.showAddButton())
+        optionallyHideView(views, R.id.refreshButt, context.showRefreshButton())
+        optionallyHideView(views, R.id.configButt, context.showConfigButton())
 
         setImageViewColor(views, R.id.divider, foregroundColor)
     }
