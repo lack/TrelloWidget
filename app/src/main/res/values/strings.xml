@@ -10,12 +10,21 @@
     <!-- card activity -->
     <string name="title_activity_card">Card Details</string>
 
+    <!-- add card activity -->
+    <string name="add_card_dialog_title">Add a new card</string>
+    <string name="add_card_board_name">Board / List</string>
+    <string name="add_card_title_hint">Title</string>
+    <string name="add_end">At end</string>
+    <string name="add_top">At top</string>
+    <string name="add_card_close_hint">Close</string>
+
     <!-- widget -->
     <string name="board_hint">Board name</string>
     <string name="list_hint">List name</string>
     <string name="no_cards">No more cards!</string>
     <string name="refresh">Refresh list cards</string>
     <string name="config">Change widgets list</string>
+    <string name="add">Add a new card</string>
 
     <string name="card_title">Card title</string>
 
@@ -41,5 +50,7 @@
     <string name="http_fail">Trello http request failed: %s</string>
     <string name="login_fail">Login failed multiple times. Logging you out: %s</string>
     <string name="board_load_fail">Could not load board data.\nPlease make sure you are logged in and try again.\n\nError was: %s</string>
+
+
 
 </resources>
