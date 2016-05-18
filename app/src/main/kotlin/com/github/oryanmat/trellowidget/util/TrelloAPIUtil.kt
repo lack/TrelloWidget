@@ -11,23 +11,26 @@ import com.android.volley.toolbox.Volley
 import com.github.oryanmat.trellowidget.R
 import com.github.oryanmat.trellowidget.T_WIDGET
 import com.github.oryanmat.trellowidget.model.BoardList
+import com.github.oryanmat.trellowidget.model.NewCard
 import java.util.concurrent.ExecutionException
 
 const val TOKEN_PREF_KEY = "com.oryanmat.trellowidget.usertoken"
 const val APP_KEY = "b250ef70ccf79ea5e107279a91045e6e"
 const val BASE_URL = "https://api.trello.com/"
 const val API_VERSION = "1/"
-const val KEY = "&key=$APP_KEY"
+const val KEY = "key=$APP_KEY"
 const val AUTH_URL = "https://trello.com/1/authorize" +
         "?name=TrelloWidget" +
-        KEY +
+        "&" + KEY +
+        "&scope=read,write" +
         "&expiration=never" +
         "&callback_method=fragment" +
         "&return_url=trello-widget://callback"
 
-const val USER = "members/me?fields=fullName,username"
-const val BOARDS = "members/me/boards?filter=open&fields=id,name,url&lists=open"
-const val LIST_CARDS = "lists/%s?cards=open&card_fields=name,badges,labels,url"
+const val USER = "members/me?fields=fullName,username&"
+const val BOARDS = "members/me/boards?filter=open&fields=id,name,url&lists=open&"
+const val LIST_CARDS = "lists/%s?cards=open&card_fields=name,badges,labels,url&"
+const val CARDS = "cards/?"
 
 class TrelloAPIUtil private constructor(internal var context: Context) {
     internal val queue: RequestQueue by lazy { Volley.newRequestQueue(context) }
@@ -53,18 +56,34 @@ class TrelloAPIUtil private constructor(internal var context: Context) {
         return Json.tryParseJson(json, BoardList::class.java, BoardList.error(json))
     }
 
-    fun getUserAsync(listener: Response.Listener<String>, errorListener: Response.ErrorListener) {
-        getAsync(user(), listener, errorListener)
+    fun <L> addNewCard(newCard: NewCard, listener: L) where
+            L : Response.Listener<String>,
+            L : Response.ErrorListener {
+        val json = Json.toJson(newCard)
+        postAsync(buildURL(CARDS), json, listener)
     }
 
-    fun getAsync(url: String, listener: Response.Listener<String>, errorListener: Response.ErrorListener) {
-        queue.add(StringRequest(Request.Method.GET, url, listener, errorListener))
-    }
+    fun getUserAsync(listener: Response.Listener<String>, errorListener: Response.ErrorListener) =
+            getAsync(user(), listener, errorListener)
 
-    private fun get(url: String): String {
+    fun getAsync(url: String, listener: Response.Listener<String>, errorListener: Response.ErrorListener) =
+            requestAsync(url, null, Request.Method.GET, listener, errorListener)
+
+    fun <L> getAsync(url: String, listener: L) where
+            L : Response.Listener<String>,
+            L : Response.ErrorListener =
+            getAsync(url, listener, listener)
+
+    fun <L> postAsync(url: String, data: String, listener: L) where
+            L : Response.Listener<String>,
+            L : Response.ErrorListener =
+            requestAsync(url, data, Request.Method.POST, listener, listener)
+
+    private fun get(url: String) = syncRequest(url, null, Request.Method.GET)
+
+    private fun syncRequest(url: String, data: String?, method: Int): String {
         val future = RequestFuture.newFuture<String>()
-        queue.add(StringRequest(Request.Method.GET, url, future, future))
-
+        requestAsync(url, data, method, future, future)
         return get(future)
     }
 
@@ -81,4 +100,23 @@ class TrelloAPIUtil private constructor(internal var context: Context) {
         Log.e(T_WIDGET, msg)
         return msg
     }
+
+    private class OptionalDataStringRequest(method: Int, url: String, private val data: String?, listener: Response.Listener<String>, errorListener: Response.ErrorListener) :
+            StringRequest(method, url, listener, errorListener) {
+        override fun getBody(): ByteArray {
+            if (data != null)
+                return data.toByteArray()
+            return ByteArray(0)
+        }
+
+        override fun getBodyContentType(): String {
+            return "application/json; charset=utf-8"
+        }
+    }
+
+    fun requestAsync(url: String, data: String?, method: Int, listener: Response.Listener<String>, errorListener: Response.ErrorListener) {
+        val request = OptionalDataStringRequest(method, url, data, listener, errorListener)
+        queue.add(request)
+    }
+
 }

@@ -45,7 +45,7 @@ class ConfigActivity : ThemedActivity(), OnItemSelectedAdapter, Response.Listene
     }
 
     private fun get(url: String, listener: ConfigActivity) =
-            TrelloAPIUtil.instance.getAsync(url, listener, listener)
+            TrelloAPIUtil.instance.getAsync(url, listener)
 
     override fun onResponse(response: String) {
         progressBar.visibility = View.GONE

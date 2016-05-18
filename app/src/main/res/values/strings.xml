@@ -17,6 +17,9 @@
     <string name="add_end">At end</string>
     <string name="add_top">At top</string>
     <string name="add_card_close_hint">Close</string>
+    <string name="add_card_success">Added</string>
+    <string name="add_card_permission_failure">Card failed to add.\nPlease try logging out and logging in again.</string>
+    <string name="add_card_failure">Card failed to add.</string>
 
     <!-- widget -->
     <string name="board_hint">Board name</string>
