@@ -66,3 +66,14 @@ data class User(
         val username: String = "") {
     override fun toString() = "$fullName (@$username)"
 }
+
+data class NewCard(
+        val idList: String,
+        val name: String,
+        val pos: String) {
+
+    companion object {
+        val POS_TOP = "top"
+        val POS_BOTTOM = "bottom"
+    }
+}

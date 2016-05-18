@@ -58,7 +58,7 @@ class ConfigActivity : Activity(), OnItemSelectedAdapter, Response.Listener<Stri
     }
 
     private fun get(url: String, listener: ConfigActivity) =
-            TrelloAPIUtil.instance.getAsync(url, listener, listener)
+            TrelloAPIUtil.instance.getAsync(url, listener)
 
     override fun onResponse(response: String) {
         val boards = Json.tryParseJson(response, BOARD_LIST_TYPE, emptyList<Board>())
