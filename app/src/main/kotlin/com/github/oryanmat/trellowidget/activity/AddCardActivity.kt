@@ -13,18 +13,14 @@ import com.github.oryanmat.trellowidget.R
 import com.github.oryanmat.trellowidget.T_WIDGET
 import com.github.oryanmat.trellowidget.TrelloWidget
 import com.github.oryanmat.trellowidget.model.NewCard
-import com.github.oryanmat.trellowidget.util.TrelloAPIUtil
-import com.github.oryanmat.trellowidget.util.getBoard
-import com.github.oryanmat.trellowidget.util.getList
+import com.github.oryanmat.trellowidget.util.*
 import com.github.oryanmat.trellowidget.util.color.tintDrawables
-import com.github.oryanmat.trellowidget.util.createRefreshIntent
 import kotlinx.android.synthetic.main.activity_add_card.*
 import java.nio.charset.Charset
 
 class AddCardActivity : Activity() {
     private var appWidgetId = INVALID_APPWIDGET_ID
     internal var cardsAdded = 0
-    internal var addSingleCard = false
 
     enum class Location {
         INSERT_AT_TOP,
@@ -101,7 +97,7 @@ class AddCardActivity : Activity() {
             // TODO: The 'response' is the json of the newly-created card - We could maybe inject this into the RemoteView without forcing a refresh?
             Log.i(T_WIDGET, "Added card to $description")
             cardsAdded++
-            if (addSingleCard)
+            if (!addMultiples.isChecked)
                 close()
             else
                 resetInput()
@@ -111,6 +107,7 @@ class AddCardActivity : Activity() {
         override fun onErrorResponse(error: VolleyError) {
             Log.e(T_WIDGET, "Add Card failed: ${error.networkResponse.data.toString(Charset.defaultCharset())}", error)
             val message = getString(when(error.networkResponse.statusCode) {
+                // TODO: Maybe actually open the login dialog for error 401?
                 401 -> R.string.add_card_permission_failure
                 else -> R.string.add_card_failure
             })

@@ -56,6 +56,13 @@
             android:inputType="textCapSentences"
             android:hint="@string/add_card_title_hint" />
 
+        <Switch
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/add_card_add_multiples"
+            android:id="@+id/addMultiples"
+            android:layout_gravity="right" />
+
         <LinearLayout
             style="?android:buttonBarStyle"
             android:layout_width="fill_parent"
