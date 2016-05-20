@@ -5,10 +5,10 @@ import android.appwidget.AppWidgetManager.INVALID_APPWIDGET_ID
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
-import com.android.volley.Response
 import com.android.volley.VolleyError
 import com.github.oryanmat.trellowidget.R
 import com.github.oryanmat.trellowidget.T_WIDGET
+import com.github.oryanmat.trellowidget.model.Card
 import com.github.oryanmat.trellowidget.model.NewCard
 import com.github.oryanmat.trellowidget.util.*
 import com.github.oryanmat.trellowidget.util.color.tintDrawables
@@ -47,7 +47,8 @@ class AddCardActivity : WritableActivity() {
         topButton.tintDrawables(theme, android.R.attr.colorForeground)
         bottomButton.tintDrawables(theme, android.R.attr.colorForeground)
         setButtonsEnabled(true)
-   }
+        addMultiples.setOnCheckedChangeListener { _, b -> openAfterAdd.isEnabled = !b }
+    }
 
     private fun addNewCard(where: Location) {
         val newTitle = add_card_title.text.toString()
@@ -71,15 +72,28 @@ class AddCardActivity : WritableActivity() {
         // TODO: Start a spinner or something?
     }
 
-    inner class AddCardListener(private val description: String) : Response.Listener<String>, Response.ErrorListener {
-        override fun onResponse(response: String) {
-            // TODO: The 'response' is the json of the newly-created card - We could maybe inject this into the RemoteView without forcing a refresh?
-            Log.i(T_WIDGET, "Added card to $description")
+    inner class AddCardListener(private val description: String) : TrelloAPIUtil.CardResponseListener() {
+        override fun onResponse(card: Card) {
+            // TODO: We could maybe inject this into the RemoteView without forcing a refresh?
             cardsAdded++
-            if (!addMultiples.isChecked)
+            if (card.url.isEmpty()) {
+                val message = getString(R.string.add_card_parse_failure)
+                Log.w(T_WIDGET, message)
+                Toast.makeText(this@AddCardActivity, message, Toast.LENGTH_LONG).show()
                 close()
-            else
+                return
+            }
+
+            Log.i(T_WIDGET, "Added card ${card.id} (${card.url}) to $description")
+            if (!addMultiples.isChecked) {
+                if (openAfterAdd.isEnabled && openAfterAdd.isChecked) {
+                    val openCardIntent = createViewCardIntent(card)
+                    startActivity(openCardIntent)
+                }
+                close()
+            } else {
                 resetInput()
+            }
             Toast.makeText(this@AddCardActivity, getString(R.string.add_card_success), Toast.LENGTH_SHORT).show()
         }
 

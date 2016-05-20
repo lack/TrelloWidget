@@ -11,6 +11,7 @@ import com.android.volley.toolbox.Volley
 import com.github.oryanmat.trellowidget.R
 import com.github.oryanmat.trellowidget.T_WIDGET
 import com.github.oryanmat.trellowidget.model.BoardList
+import com.github.oryanmat.trellowidget.model.Card
 import com.github.oryanmat.trellowidget.model.NewCard
 import java.util.concurrent.ExecutionException
 
@@ -109,6 +110,15 @@ class TrelloAPIUtil private constructor(internal var context: Context) {
 
         override fun getBodyContentType(): String {
             return "application/json; charset=utf-8"
+        }
+    }
+
+    abstract class CardResponseListener: Response.Listener<String>, Response.ErrorListener {
+        abstract fun onResponse(card: Card)
+
+        override fun onResponse(response: String) {
+            val card = Json.tryParseJson(response, Card::class.java, Card())
+            onResponse(card)
         }
     }
 
