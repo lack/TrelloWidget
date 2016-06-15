@@ -1,5 +1,6 @@
 package com.github.oryanmat.trellowidget.model
 
+import com.github.oryanmat.trellowidget.util.Json
 import com.google.gson.reflect.TypeToken
 import java.lang.reflect.Type
 
@@ -39,7 +40,17 @@ data class Card(
         val due: String = "",
         val badges: Badges = Badges(),
         val url: String = "",
-        val labels: List<Label> = emptyList())
+        val labels: List<Label> = emptyList()) {
+
+    override fun toString(): String = "$name ($id)"
+
+    fun toJson(): String = Json.toJson(this)
+
+    companion object {
+        fun parse(json: String) : Card =
+            Json.tryParseJson(json, Card::class.java, Card())
+    }
+}
 
 data class Badges(
         val votes: Int = 0,

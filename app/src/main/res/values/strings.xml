@@ -26,6 +26,16 @@
     <string name="add_card_relogin_required_title">Re-login needed</string>
     <string name="add_card_relogin_required_details">To add a card, your Trello session must be updated with write permissions.  You will be redirected to the login page to confirm the new permissions.</string>
 
+    <!-- move card activity -->
+    <string name="move_this_card">Move this card</string>
+    <string name="move_card_dialog_title">Move Card</string>
+    <string name="move_card_card_name">Card name</string>
+    <string name="move_card_top_button">To top</string>
+    <string name="move_card_up_button">Shift up</string>
+    <string name="move_card_list_button">To list…</string>
+    <string name="move_card_down_button">Shift down</string>
+    <string name="move_card_buttom_button">To Bottom</string>
+
     <!-- widget -->
     <string name="board_hint">Board name</string>
     <string name="list_hint">List name</string>

@@ -50,6 +50,14 @@
                 <action android:name="com.github.oryanmat.trellowidget.addAction" />
             </intent-filter>
         </activity>
+        <activity android:name=".activity.MoveCardActivity"
+            android:excludeFromRecents="true"
+            android:label="@string/move_card_dialog_title"
+            android:theme="@style/DialogTheme">
+            <intent-filter>
+                <action android:name="com.github.oryanmat.trellowidget.moveCardAction" />
+            </intent-filter>
+        </activity>
 
         <receiver android:name=".widget.TrelloWidgetProvider">
             <intent-filter>
@@ -66,6 +74,8 @@
         <service
             android:name=".widget.WidgetService"
             android:permission="android.permission.BIND_REMOTEVIEWS" />
+
+        <service android:name=".widget.CardListDispatcherService" />
 
     </application>
 
