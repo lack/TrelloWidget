@@ -14,12 +14,11 @@ import com.github.oryanmat.trellowidget.widget.TrelloWidgetProvider
 
 import com.github.oryanmat.trellowidget.widget.ADD_ACTION
 import com.github.oryanmat.trellowidget.widget.REFRESH_ACTION
-import com.github.oryanmat.trellowidget.widget.WIDGET_ID
 
 internal fun Context.createRefreshIntent(appWidgetId: Int): Intent {
     val refreshIntent = Intent(this, TrelloWidgetProvider::class.java)
     refreshIntent.action = REFRESH_ACTION
-    refreshIntent.putExtra(WIDGET_ID, appWidgetId)
+    refreshIntent.putExtra(EXTRA_APPWIDGET_ID, appWidgetId)
     return refreshIntent
 }
 
