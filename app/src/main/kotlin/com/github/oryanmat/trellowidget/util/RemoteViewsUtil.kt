@@ -32,14 +32,14 @@ object RemoteViewsUtil {
     }
 
     fun setImage(context: Context, views: RemoteViews,
-                 @IdRes view: Int, @DrawableRes image: Int) {
+                 @IdRes view: Int, @DrawableRes image: Int, scaleFactor: Double = IMAGE_SCALE) {
         // TODO remove dependency on support library by setting min sdk 21 (android 5.0)
         val drawable = ContextCompat.getDrawable(context, image)
         val bitmap = (drawable as BitmapDrawable).bitmap
         val prefTextScale = context.getPrefTextScale().toDouble()
         val scaledBitmap = Bitmap.createScaledBitmap(bitmap,
-                (bitmap.width.toDouble() * IMAGE_SCALE * prefTextScale).toInt(),
-                (bitmap.height.toDouble() * IMAGE_SCALE * prefTextScale).toInt(), true)
+                (bitmap.width.toDouble() * scaleFactor * prefTextScale).toInt(),
+                (bitmap.height.toDouble() * scaleFactor * prefTextScale).toInt(), true)
         views.setImageViewBitmap(view, scaledBitmap)
     }
 

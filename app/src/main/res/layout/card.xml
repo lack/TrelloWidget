@@ -4,6 +4,7 @@
     android:id="@+id/card"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:descendantFocusability="blocksDescendants"
     style="@android:style/Theme.DeviceDefault">
 
     <LinearLayout
@@ -14,21 +15,40 @@
         android:paddingStart="@dimen/title_padding"
         android:paddingEnd="@dimen/title_padding" />
 
-    <TextView
-        android:id="@+id/card_title"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/labels_layout"
-        android:paddingStart="@dimen/title_padding"
-        android:paddingTop="@dimen/card_padding_top"
-        android:paddingEnd="@dimen/title_padding"
-        android:text="@string/card_title" />
+    <LinearLayout
+            android:id="@+id/card_title_container"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/labels_layout"
+            android:orientation="horizontal"
+            android:paddingStart="@dimen/title_padding"
+            android:paddingEnd="@dimen/title_padding">
+
+        <TextView
+                android:id="@+id/card_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingStart="@dimen/title_padding"
+                android:paddingTop="@dimen/card_padding_top"
+                android:paddingEnd="@dimen/title_padding"
+                android:text="@string/card_title" />
+
+        <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
+                android:id="@+id/card_move_button"
+                android:src="@drawable/ic_compare_arrows_white_24dp"
+                android:background="@android:color/transparent"
+                android:contentDescription="@string/move_this_card"/>
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/badges_layout"
-        android:layout_width="fill_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/card_title"
+        android:layout_below="@id/card_title_container"
         android:orientation="horizontal"
         android:paddingStart="@dimen/title_padding"
         android:paddingEnd="@dimen/title_padding">

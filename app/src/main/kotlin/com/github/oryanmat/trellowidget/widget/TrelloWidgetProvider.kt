@@ -21,6 +21,8 @@ import com.github.oryanmat.trellowidget.util.RemoteViewsUtil.optionallyHideView
 
 val ADD_ACTION = "com.github.oryanmat.trellowidget.addAction"
 val REFRESH_ACTION = "com.github.oryanmat.trellowidget.refreshAction"
+val MOVE_CARD_ACTION = "com.github.oryanmat.trellowidget.moveCardAction"
+val EXTRA_CARD = "com.github.oryanmat.trellowidget.card"
 private val TRELLO_PACKAGE_NAME = "com.trello"
 private val TRELLO_URL = "https://www.trello.com"
 
@@ -77,7 +79,7 @@ class TrelloWidgetProvider : AppWidgetProvider() {
         setBackgroundColor(views, R.id.card_frame, context.getCardBackgroundColor())
         views.setTextColor(R.id.empty_card_list, context.getCardForegroundColor())
         views.setEmptyView(R.id.card_list, R.id.empty_card_list)
-        views.setPendingIntentTemplate(R.id.card_list, getCardPendingIntent(context))
+        views.setPendingIntentTemplate(R.id.card_list, CardListDispatcherService.generateIntentTemplate(context))
         views.setRemoteAdapter(R.id.card_list, getRemoteAdapterIntent(context, appWidgetId))
     }
 
@@ -101,11 +103,6 @@ class TrelloWidgetProvider : AppWidgetProvider() {
     private fun getReconfigPendingIntent(context: Context, appWidgetId: Int): PendingIntent {
         val reconfigIntent = context.createReconfigureIntent(appWidgetId)
         return PendingIntent.getActivity(context, appWidgetId, reconfigIntent, 0)
-    }
-
-    private fun getCardPendingIntent(context: Context): PendingIntent {
-        // individual card URIs are set in a RemoteViewsFactory.setOnClickFillInIntent
-        return context.createViewCardIntentTemplate()
     }
 
     private fun getTitleIntent(context: Context, board: Board): PendingIntent {
