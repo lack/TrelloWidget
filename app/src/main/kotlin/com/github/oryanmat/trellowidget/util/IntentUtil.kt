@@ -1,6 +1,5 @@
 package com.github.oryanmat.trellowidget.util
 
-import android.app.PendingIntent
 import android.appwidget.AppWidgetManager.*
 import android.content.Context
 import android.content.Intent
@@ -34,11 +33,6 @@ internal fun Context.createAddCardIntent(appWidgetId: Int): Intent {
     addIntent.action = ADD_ACTION
     addIntent.putExtra(EXTRA_APPWIDGET_ID, appWidgetId)
     return addIntent
-}
-
-internal fun Context.createViewCardIntentTemplate(): PendingIntent {
-    val viewIntentTemplate = Intent(Intent.ACTION_VIEW)
-    return PendingIntent.getActivity(this, 0, viewIntentTemplate, 0)
 }
 
 internal fun createViewCardIntent(card: Card): Intent {

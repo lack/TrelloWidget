@@ -19,6 +19,7 @@ import com.github.oryanmat.trellowidget.util.*
 import com.github.oryanmat.trellowidget.util.RemoteViewsUtil.setImage
 import com.github.oryanmat.trellowidget.util.RemoteViewsUtil.setImageViewColor
 import com.github.oryanmat.trellowidget.util.RemoteViewsUtil.setTextView
+import com.github.oryanmat.trellowidget.util.color.lightDim
 import com.github.oryanmat.trellowidget.util.color.colors
 import com.github.oryanmat.trellowidget.util.color.dim
 import java.util.*
@@ -46,6 +47,7 @@ class CardRemoteViewFactory(private val context: Context,
         setLabels(views, card)
         setTitle(views, card)
         setBadges(views, card)
+        setupMoveButton(views, card)
         setDivider(views)
         setOnClickFillInIntent(views, card)
 
@@ -53,8 +55,7 @@ class CardRemoteViewFactory(private val context: Context,
     }
 
     private fun setOnClickFillInIntent(views: RemoteViews, card: Card) {
-        val intent = createViewCardIntent(card)
-        views.setOnClickFillInIntent(R.id.card, intent)
+        views.setOnClickFillInIntent(R.id.card, CardListDispatcherService.generateIntent(context, CardListDispatcherService.Method.VIEW, appWidgetId, card))
     }
 
     private fun setBadges(views: RemoteViews, card: Card) {
@@ -138,6 +139,12 @@ class CardRemoteViewFactory(private val context: Context,
         setImageViewColor(view, R.id.label, labelColor)
         setImage(context, view, R.id.label, R.drawable.label)
         views.addView(R.id.labels_layout, view)
+    }
+
+    private fun setupMoveButton(views: RemoteViews, card: Card) {
+        setImageViewColor(views, R.id.card_move_button, color.lightDim())
+        views.setOnClickFillInIntent(R.id.card_move_button, CardListDispatcherService.generateIntent(context, CardListDispatcherService.Method.MOVE, appWidgetId, card))
+        setImage(context, views, R.id.card_move_button, R.drawable.ic_compare_arrows_white_24dp, scaleFactor = 1.0)
     }
 
     private fun setDivider(views: RemoteViews) = setImageViewColor(views, R.id.list_item_divider, color)
