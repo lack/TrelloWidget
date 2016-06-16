@@ -5,6 +5,7 @@ import android.util.Log
 import com.android.volley.Request
 import com.android.volley.RequestQueue
 import com.android.volley.Response
+import com.android.volley.VolleyError
 import com.android.volley.toolbox.RequestFuture
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
@@ -125,6 +126,11 @@ class TrelloAPIUtil private constructor(internal var context: Context) {
     fun requestAsync(url: String, data: String?, method: Int, listener: Response.Listener<String>, errorListener: Response.ErrorListener) {
         val request = OptionalDataStringRequest(method, url, data, listener, errorListener)
         queue.add(request)
+    }
+
+    fun logError(message: String, error: VolleyError) {
+        val errorMessage = "$message (${error.networkResponse.statusCode}): ${error.networkResponse.data.toString(Charsets.UTF_8)}"
+        Log.e(T_WIDGET, errorMessage, error)
     }
 
 }

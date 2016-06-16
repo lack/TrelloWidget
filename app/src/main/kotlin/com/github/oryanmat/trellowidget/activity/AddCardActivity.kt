@@ -13,7 +13,6 @@ import com.github.oryanmat.trellowidget.model.NewCard
 import com.github.oryanmat.trellowidget.util.*
 import com.github.oryanmat.trellowidget.util.color.tintDrawables
 import kotlinx.android.synthetic.main.activity_add_card.*
-import java.nio.charset.Charset
 
 class AddCardActivity : WritableActivity() {
     private var appWidgetId = INVALID_APPWIDGET_ID
@@ -98,7 +97,7 @@ class AddCardActivity : WritableActivity() {
         }
 
         override fun onErrorResponse(error: VolleyError) {
-            Log.e(T_WIDGET, "Add Card failed: ${error.networkResponse.data.toString(Charset.defaultCharset())}", error)
+            TrelloAPIUtil.instance.logError("Add request failed", error)
             val message = getString(when(error.networkResponse.statusCode) {
                 // TODO: Maybe actually open the login dialog for error 401?
                 401 -> R.string.add_card_permission_failure
