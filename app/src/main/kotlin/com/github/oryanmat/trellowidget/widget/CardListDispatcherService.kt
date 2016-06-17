@@ -2,13 +2,14 @@ package com.github.oryanmat.trellowidget.widget
 
 import android.app.IntentService
 import android.app.PendingIntent
-import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetManager.EXTRA_APPWIDGET_ID
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.util.Log
 import com.github.oryanmat.trellowidget.T_WIDGET
+import com.github.oryanmat.trellowidget.activity.EXTRA_NEXTPOS
+import com.github.oryanmat.trellowidget.activity.EXTRA_PREVPOS
 import com.github.oryanmat.trellowidget.activity.MoveCardActivity
 import com.github.oryanmat.trellowidget.model.Card
 import com.github.oryanmat.trellowidget.util.createViewCardIntent
@@ -30,23 +31,32 @@ class CardListDispatcherService: IntentService("CardListDispatcherService") {
         val extras = intent.extras
         val card = Card.parse(extras.getString(EXTRA_CARD))
         val method = Method.valueOf(extras.getString(EXTRA_METHOD))
-        val appWidgetId = extras.getInt(EXTRA_APPWIDGET_ID)
 
         Log.d(T_WIDGET, "Dispatching a $method request for card $card")
         val nextIntent = when(method) {
             Method.VIEW -> createViewCardIntent(card)
-            Method.MOVE -> MoveCardActivity.createMoveCardIntent(this, card, appWidgetId)
+            Method.MOVE -> MoveCardActivity.createMoveCardIntent(this, extras)
         }
         nextIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         startActivity(nextIntent)
     }
 
     companion object IntentFactory {
-        fun generateIntent(context: Context, method: Method, appWidgetId: Int, card: Card): Intent {
+        private fun generateIntent(context: Context, method: Method, appWidgetId: Int, card: Card): Intent {
             val intent = Intent(ACTION_CARD_LIST, Uri.EMPTY, context, CardListDispatcherService::class.java)
             intent.putExtra(EXTRA_METHOD, method.toString())
             intent.putExtra(EXTRA_APPWIDGET_ID, appWidgetId)
             intent.putExtra(EXTRA_CARD, card.toJson())
+            return intent
+        }
+
+        fun generateViewIntent(context: Context, appWidgetId: Int, card: Card): Intent =
+            generateIntent(context, Method.VIEW, appWidgetId, card)
+
+        fun generateMoveActivityIntent(context: Context, appWidgetId: Int, card: Card, prevPos: String, nextPos: String): Intent {
+            val intent = generateIntent(context, Method.MOVE, appWidgetId, card)
+            intent.putExtra(EXTRA_PREVPOS, prevPos)
+            intent.putExtra(EXTRA_NEXTPOS, nextPos)
             return intent
         }
 
