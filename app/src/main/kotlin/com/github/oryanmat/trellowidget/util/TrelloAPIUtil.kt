@@ -33,6 +33,7 @@ const val BOARDS = "members/me/boards?filter=open&fields=id,name,url&lists=open&
 const val LIST_CARDS = "lists/%s?cards=open&card_fields=name,badges,labels,url,pos&"
 const val CARDS = "cards/?"
 const val CARDS_POSITION = "cards/%s/pos?value=%s&"
+const val MOVE_CARD_TO_LIST = "cards/%s/idList?value=%s&"
 
 const val CARDS_POSITION_TOP = "top"
 const val CARDS_POSITION_BOTTOM = "bottom"
@@ -96,6 +97,11 @@ class TrelloAPIUtil private constructor(internal var context: Context) {
             L : Response.Listener<String>,
             L : Response.ErrorListener =
             putAsync(buildURL(CARDS_POSITION.format(card.id, pos)), null, listener)
+
+    fun <L> moveCardToList(card: Card, list: BoardList, listener: L) where
+            L : Response.Listener<String>,
+            L : Response.ErrorListener =
+            putAsync(buildURL(MOVE_CARD_TO_LIST.format(card.id, list.id)), null, listener)
 
     fun getUserAsync(listener: Response.Listener<String>, errorListener: Response.ErrorListener) =
             getAsync(user(), listener, errorListener)
