@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
-    android:layout_width="match_parent"
+    android:layout_width="300dp"
     android:layout_height="match_parent"
     tools:context="com.github.oryanmat.trellowidget.activity.MoveCardActivity"
     android:padding="4dp">
@@ -33,12 +33,30 @@
         android:id="@+id/move_card_up_button"
         android:drawableRight="@drawable/ic_arrow_upward_black_24dp" />
 
-    <Button
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/move_card_list_button"
-        android:id="@+id/move_card_list_button"
-        android:drawableRight="@drawable/ic_arrow_forward_black_24dp" />
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Spinner
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/move_card_list_selection"
+            android:layout_weight="1"
+            android:layout_gravity="center_vertical"
+            android:prompt="@string/move_card_list_selection_prompt" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/move_card_list_button"
+            android:src="@drawable/ic_arrow_forward_black_24dp"
+            android:tint="?android:colorForeground"
+            android:layout_gravity="center_vertical"
+            android:longClickable="true"
+            android:contentDescription="@string/move_card_list_button" />
+
+    </LinearLayout>
 
     <Button
         android:layout_width="fill_parent"
