@@ -30,8 +30,12 @@ val AUTH_URL = "https://trello.com/1/authorize" +
 
 const val USER = "members/me?fields=fullName,username&"
 const val BOARDS = "members/me/boards?filter=open&fields=id,name,url&lists=open&"
-const val LIST_CARDS = "lists/%s?cards=open&card_fields=name,badges,labels,url&"
+const val LIST_CARDS = "lists/%s?cards=open&card_fields=name,badges,labels,url,pos&"
 const val CARDS = "cards/?"
+const val CARDS_POSITION = "cards/%s/pos?value=%s&"
+
+const val CARDS_POSITION_TOP = "top"
+const val CARDS_POSITION_BOTTOM = "bottom"
 
 class TrelloAPIUtil private constructor(internal var context: Context) {
     internal val queue: RequestQueue by lazy { Volley.newRequestQueue(context) }
@@ -41,6 +45,31 @@ class TrelloAPIUtil private constructor(internal var context: Context) {
 
         fun init(context: Context) {
             instance = TrelloAPIUtil(context)
+        }
+
+        private fun halfway(one: Card, two: Card) : String {
+            val a = one.pos.toDouble()
+            val b = two.pos.toDouble()
+            val halfway = a + ((b - a) / 2.0)
+            return halfway.toString()
+        }
+
+        fun getPrevPos(cards: List<Card>, position: Int) : String {
+            return if (position > 1)
+                halfway(cards[position - 1], cards[position - 2])
+            else if (position > 0)
+                CARDS_POSITION_TOP
+            else
+                ""
+        }
+
+        fun getNextPos(cards: List<Card>, position: Int) : String {
+            return if (position < (cards.size - 2))
+                halfway(cards[position + 1], cards[position + 2])
+            else if (position < (cards.size - 1))
+                CARDS_POSITION_BOTTOM
+            else
+                ""
         }
     }
 
@@ -63,6 +92,11 @@ class TrelloAPIUtil private constructor(internal var context: Context) {
         postAsync(buildURL(CARDS), json, listener)
     }
 
+    fun <L> repositionCard(card: Card, pos: String, listener: L) where
+            L : Response.Listener<String>,
+            L : Response.ErrorListener =
+            putAsync(buildURL(CARDS_POSITION.format(card.id, pos)), null, listener)
+
     fun getUserAsync(listener: Response.Listener<String>, errorListener: Response.ErrorListener) =
             getAsync(user(), listener, errorListener)
 
@@ -78,6 +112,11 @@ class TrelloAPIUtil private constructor(internal var context: Context) {
             L : Response.Listener<String>,
             L : Response.ErrorListener =
             requestAsync(url, data, Request.Method.POST, listener, listener)
+
+    fun <L> putAsync(url: String, data: String?, listener: L) where
+            L : Response.Listener<String>,
+            L : Response.ErrorListener =
+            requestAsync(url, data, Request.Method.PUT, listener, listener)
 
     private fun get(url: String) = syncRequest(url, null, Request.Method.GET)
 

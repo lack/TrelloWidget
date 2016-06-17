@@ -1,10 +1,8 @@
 package com.github.oryanmat.trellowidget.widget
 
 import android.content.Context
-import android.content.Intent
 import android.graphics.Color
 import android.graphics.Color.*
-import android.net.Uri
 import android.support.annotation.ColorInt
 import android.support.annotation.DrawableRes
 import android.support.annotation.IdRes
@@ -15,13 +13,16 @@ import com.github.oryanmat.trellowidget.R
 import com.github.oryanmat.trellowidget.model.BoardList
 import com.github.oryanmat.trellowidget.model.Card
 import com.github.oryanmat.trellowidget.model.Label
-import com.github.oryanmat.trellowidget.util.*
+import com.github.oryanmat.trellowidget.util.DateTimeUtil
 import com.github.oryanmat.trellowidget.util.RemoteViewsUtil.setImage
 import com.github.oryanmat.trellowidget.util.RemoteViewsUtil.setImageViewColor
 import com.github.oryanmat.trellowidget.util.RemoteViewsUtil.setTextView
 import com.github.oryanmat.trellowidget.util.color.lightDim
+import com.github.oryanmat.trellowidget.util.TrelloAPIUtil
 import com.github.oryanmat.trellowidget.util.color.colors
 import com.github.oryanmat.trellowidget.util.color.dim
+import com.github.oryanmat.trellowidget.util.getCardForegroundColor
+import com.github.oryanmat.trellowidget.util.getList
 import java.util.*
 
 class CardRemoteViewFactory(private val context: Context,
@@ -47,7 +48,7 @@ class CardRemoteViewFactory(private val context: Context,
         setLabels(views, card)
         setTitle(views, card)
         setBadges(views, card)
-        setupMoveButton(views, card)
+        setupMoveButton(views, card, position)
         setDivider(views)
         setOnClickFillInIntent(views, card)
 
@@ -55,7 +56,7 @@ class CardRemoteViewFactory(private val context: Context,
     }
 
     private fun setOnClickFillInIntent(views: RemoteViews, card: Card) {
-        views.setOnClickFillInIntent(R.id.card, CardListDispatcherService.generateIntent(context, CardListDispatcherService.Method.VIEW, appWidgetId, card))
+        views.setOnClickFillInIntent(R.id.card, CardListDispatcherService.generateViewIntent(context, appWidgetId, card))
     }
 
     private fun setBadges(views: RemoteViews, card: Card) {
@@ -142,9 +143,11 @@ class CardRemoteViewFactory(private val context: Context,
         views.addView(R.id.labels_layout, view)
     }
 
-    private fun setupMoveButton(views: RemoteViews, card: Card) {
+    private fun setupMoveButton(views: RemoteViews, card: Card, position: Int) {
+        val prevPos = TrelloAPIUtil.getPrevPos(cards, position)
+        val nextPos = TrelloAPIUtil.getNextPos(cards, position)
         setImageViewColor(views, R.id.card_move_button, color.lightDim())
-        views.setOnClickFillInIntent(R.id.card_move_button, CardListDispatcherService.generateIntent(context, CardListDispatcherService.Method.MOVE, appWidgetId, card))
+        views.setOnClickFillInIntent(R.id.card_move_button, CardListDispatcherService.generateMoveActivityIntent(context, appWidgetId, card, prevPos, nextPos))
         setImage(context, views, R.id.card_move_button, R.drawable.ic_compare_arrows_white_24dp, scaleFactor = 1.0)
     }
 

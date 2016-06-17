@@ -40,7 +40,8 @@ data class Card(
         val due: String = "",
         val badges: Badges = Badges(),
         val url: String = "",
-        val labels: List<Label> = emptyList()) {
+        val labels: List<Label> = emptyList(),
+        val pos: String = "") {
 
     override fun toString(): String = "$name ($id)"
 
