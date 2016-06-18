@@ -103,4 +103,9 @@
     <string name="pref_add_button_desc">Include an add button in the widget title bar</string>
     <bool name="pref_add_button_default">true</bool>
 
+    <string name="pref_move_button_key">has_move_button</string>
+    <string name="pref_move_button_title">Move Button</string>
+    <string name="pref_move_button_desc">Include a move button for each card</string>
+    <bool name="pref_move_button_default">true</bool>
+
 </resources>

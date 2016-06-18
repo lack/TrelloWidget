@@ -36,6 +36,9 @@ internal fun Context.showRefreshButton() =
 internal fun Context.showConfigButton() =
         isEnabled(R.string.pref_config_button_key)
 
+internal fun Context.showCardMoveButton() =
+        isEnabled(R.string.pref_move_button_key)
+
 internal @ColorInt fun Context.getTitleBackgroundColor(): Int = when {
     isTitleUniqueColor() -> getColorPref(R.string.pref_title_back_color_key)
     else -> getCardBackgroundColor()
