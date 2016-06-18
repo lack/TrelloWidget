@@ -80,6 +80,12 @@
             android:summary="@string/pref_refresh_button_desc"
             android:title="@string/pref_refresh_button_title" />
 
+        <SwitchPreference
+            android:defaultValue="@bool/pref_move_button_default"
+            android:key="@string/pref_move_button_key"
+            android:summary="@string/pref_move_button_desc"
+            android:title="@string/pref_move_button_title" />
+
     </PreferenceCategory>
 
 </PreferenceScreen>
