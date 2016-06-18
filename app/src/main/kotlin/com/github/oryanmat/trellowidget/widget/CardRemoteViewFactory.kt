@@ -13,16 +13,14 @@ import com.github.oryanmat.trellowidget.R
 import com.github.oryanmat.trellowidget.model.BoardList
 import com.github.oryanmat.trellowidget.model.Card
 import com.github.oryanmat.trellowidget.model.Label
-import com.github.oryanmat.trellowidget.util.DateTimeUtil
+import com.github.oryanmat.trellowidget.util.*
+import com.github.oryanmat.trellowidget.util.RemoteViewsUtil.optionallyHideView
 import com.github.oryanmat.trellowidget.util.RemoteViewsUtil.setImage
 import com.github.oryanmat.trellowidget.util.RemoteViewsUtil.setImageViewColor
 import com.github.oryanmat.trellowidget.util.RemoteViewsUtil.setTextView
 import com.github.oryanmat.trellowidget.util.color.lightDim
-import com.github.oryanmat.trellowidget.util.TrelloAPIUtil
 import com.github.oryanmat.trellowidget.util.color.colors
 import com.github.oryanmat.trellowidget.util.color.dim
-import com.github.oryanmat.trellowidget.util.getCardForegroundColor
-import com.github.oryanmat.trellowidget.util.getList
 import java.util.*
 
 class CardRemoteViewFactory(private val context: Context,
@@ -147,6 +145,7 @@ class CardRemoteViewFactory(private val context: Context,
         val nextPos = TrelloAPIUtil.getNextPos(cards, position)
         setImageViewColor(views, R.id.card_move_button, color.lightDim())
         views.setOnClickFillInIntent(R.id.card_move_button, CardListDispatcherService.generateMoveActivityIntent(context, appWidgetId, card, prevPos, nextPos))
+        optionallyHideView(views, R.id.card_move_button, context.showCardMoveButton())
     }
 
     private fun setDivider(views: RemoteViews) = setImageViewColor(views, R.id.list_item_divider, color)
