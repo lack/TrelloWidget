@@ -15,15 +15,9 @@ import com.github.oryanmat.trellowidget.R
 import com.github.oryanmat.trellowidget.model.BoardList
 import com.github.oryanmat.trellowidget.model.Card
 import com.github.oryanmat.trellowidget.model.Label
-import com.github.oryanmat.trellowidget.util.DateTimeUtil
-import com.github.oryanmat.trellowidget.util.RemoteViewsUtil.setImage
-import com.github.oryanmat.trellowidget.util.RemoteViewsUtil.setImageViewColor
-import com.github.oryanmat.trellowidget.util.RemoteViewsUtil.setTextView
-import com.github.oryanmat.trellowidget.util.TrelloAPIUtil
-import com.github.oryanmat.trellowidget.util.color.colors
-import com.github.oryanmat.trellowidget.util.color.dim
-import com.github.oryanmat.trellowidget.util.getForegroundColor
-import com.github.oryanmat.trellowidget.util.getList
+import com.github.oryanmat.trellowidget.util.*
+import com.github.oryanmat.trellowidget.util.RemoteViews.*
+import com.github.oryanmat.trellowidget.util.color.*
 import java.util.*
 
 class CardRemoteViewFactory(private val context: Context,
@@ -46,104 +40,98 @@ class CardRemoteViewFactory(private val context: Context,
     override fun getViewAt(position: Int): RemoteViews {
         val card = cards[position]
         val views = RemoteViews(context.packageName, R.layout.card)
-        setLabels(views, card)
-        setTitle(views, card)
-        setBadges(views, card)
-        setDivider(views)
-        setOnClickFillInIntent(views, card)
-
+        with (views) {
+            setLabels(card)
+            setTitle(card)
+            setBadges(card)
+            setDivider()
+            setOnClickFillInIntent(card)
+        }
         return views
     }
 
-    private fun setOnClickFillInIntent(views: RemoteViews, card: Card) {
+    private fun RemoteViews.setOnClickFillInIntent(card: Card) {
         val intent = Intent(Intent.ACTION_VIEW, Uri.parse(card.url))
-        views.setOnClickFillInIntent(R.id.card, intent)
+        setOnClickFillInIntent(R.id.card, intent)
     }
 
-    private fun setBadges(views: RemoteViews, card: Card) {
-        setSubscribed(views, card)
-        setVotes(views, card)
-        setDescription(views, card)
-        setComments(views, card)
-        setChecklist(views, card)
-        setDueDate(views, card)
-        setAttachments(views, card)
+    private fun RemoteViews.setBadges(card: Card) {
+        setSubscribed(card)
+        setVotes(card)
+        setDescription(card)
+        setComments(card)
+        setChecklist(card)
+        setDueDate(card)
+        setAttachments(card)
     }
 
-    private fun setTitle(views: RemoteViews, card: Card) {
-        setTextView(context, views, R.id.card_title, card.name, color, R.dimen.card_badges_text)
-    }
+    private fun RemoteViews.setTitle(card: Card) =
+            setTextView(context, R.id.card_title, card.name, color, R.dimen.card_badges_text)
 
-    private fun setSubscribed(views: RemoteViews, card: Card) {
-        setBadge(views, R.id.subscribed, R.drawable.ic_visibility_white_24dp, card.badges.subscribed)
-    }
+    private fun RemoteViews.setSubscribed(card: Card) =
+        setBadge(R.id.subscribed, R.drawable.ic_visibility_white_24dp, card.badges.subscribed)
 
-    private fun setVotes(views: RemoteViews, card: Card) {
-        setIntBadge(views, R.id.votes, R.id.vote_count,
+    private fun RemoteViews.setVotes(card: Card) =
+        setIntBadge(R.id.votes, R.id.vote_count,
                 R.drawable.ic_thumb_up_white_24dp, card.badges.votes)
-    }
 
-    private fun setDescription(views: RemoteViews, card: Card) {
-        setBadge(views, R.id.desc, R.drawable.ic_subject_white_24dp, card.badges.description)
-    }
+    private fun RemoteViews.setDescription(card: Card) =
+        setBadge(R.id.desc, R.drawable.ic_subject_white_24dp, card.badges.description)
 
-    private fun setDueDate(views: RemoteViews, card: Card) {
+    private fun RemoteViews.setDueDate(card: Card) {
         val visible = card.badges.due != null
         val text = if (visible) DateTimeUtil.parseDate(card.badges.due!!) else ""
-        setBadge(views, R.id.due, R.id.due_string,
+        setBadge(R.id.due, R.id.due_string,
                 R.drawable.ic_access_time_white_24dp, text, visible)
     }
 
-    private fun setChecklist(views: RemoteViews, card: Card) {
+    private fun RemoteViews.setChecklist(card: Card) {
         val text = "${card.badges.checkItemsChecked}/${card.badges.checkItems}"
         val visible = card.badges.checkItems > 0
-        setBadge(views, R.id.checklist, R.id.checklist_count,
+        setBadge(R.id.checklist, R.id.checklist_count,
                 R.drawable.ic_check_box_white_24dp, text, visible)
     }
 
-    private fun setComments(views: RemoteViews, card: Card) {
-        setIntBadge(views, R.id.comments, R.id.comment_count,
+    private fun RemoteViews.setComments(card: Card) =
+        setIntBadge(R.id.comments, R.id.comment_count,
                 R.drawable.ic_chat_bubble_outline_white_24dp, card.badges.comments)
-    }
 
-    private fun setAttachments(views: RemoteViews, card: Card) {
-        setIntBadge(views, R.id.attachment, R.id.attachment_count,
+    private fun RemoteViews.setAttachments(card: Card) =
+        setIntBadge(R.id.attachment, R.id.attachment_count,
                 R.drawable.ic_attachment_white_24dp, card.badges.attachments)
-    }
 
-    private fun setIntBadge(views: RemoteViews, @IdRes view: Int, @IdRes textView: Int,
-                            @DrawableRes image: Int, value: Int) {
-        setBadge(views, view, textView, image, value.toString(), value > 0)
-    }
+    private fun RemoteViews.setIntBadge(@IdRes view: Int, @IdRes textView: Int,
+                            @DrawableRes image: Int, value: Int) =
+        setBadge(view, textView, image, value.toString(), value > 0)
 
-    private fun setBadge(views: RemoteViews, @IdRes view: Int, @IdRes textView: Int,
+    private fun RemoteViews.setBadge(@IdRes view: Int, @IdRes textView: Int,
                          @DrawableRes image: Int, text: String, visible: Boolean) {
-        setTextView(context, views, textView, text, color, R.dimen.card_badges_text)
-        views.setViewVisibility(textView, if (visible) View.VISIBLE else View.GONE)
-        setBadge(views, view, image, visible)
+        setTextView(context, textView, text, color, R.dimen.card_badges_text)
+        setViewVisibility(textView, if (visible) View.VISIBLE else View.GONE)
+        setBadge(view, image, visible)
     }
 
-    private fun setBadge(views: RemoteViews, @IdRes view: Int, @DrawableRes image: Int, visible: Boolean) {
-        views.setViewVisibility(view, if (visible) View.VISIBLE else View.GONE)
-        setImageViewColor(views, view, color)
-        setImage(context, views, view, image)
+    private fun RemoteViews.setBadge(@IdRes view: Int, @DrawableRes image: Int, visible: Boolean) {
+        setViewVisibility(view, if (visible) View.VISIBLE else View.GONE)
+        setImageViewColor(view, color)
+        setImage(context, view, image)
     }
 
-    private fun setLabels(views: RemoteViews, card: Card) {
-        views.removeAllViews(R.id.labels_layout)
-        card.labels.forEach { setLabel(views, it) }
+    private fun RemoteViews.setLabels(card: Card) {
+        removeAllViews(R.id.labels_layout)
+        card.labels.forEach { setLabel(it) }
     }
 
-    private fun setLabel(views: RemoteViews, label: Label) {
+    private fun RemoteViews.setLabel(label: Label) {
         var labelColor: Int = colors[label.color] ?: Color.TRANSPARENT
         labelColor = Color.argb(alpha(color), red(labelColor), green(labelColor), blue(labelColor))
-        val view = RemoteViews(context.packageName, R.layout.label)
-        setImageViewColor(view, R.id.label, labelColor)
-        setImage(context, view, R.id.label, R.drawable.label)
-        views.addView(R.id.labels_layout, view)
+        val innerView = RemoteViews(context.packageName, R.layout.label)
+        innerView.setImageViewColor(R.id.label, labelColor)
+        innerView.setImage(context, R.id.label, R.drawable.label)
+        addView(R.id.labels_layout, innerView)
     }
 
-    private fun setDivider(views: RemoteViews) = setImageViewColor(views, R.id.list_item_divider, color)
+    private fun RemoteViews.setDivider() = setImageViewColor(R.id.list_item_divider, color)
 
     override fun onCreate() {
     }
