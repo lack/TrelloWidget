@@ -8,6 +8,7 @@ import android.net.Uri
 
 import com.github.oryanmat.trellowidget.activity.AddCardActivity
 import com.github.oryanmat.trellowidget.activity.ConfigActivity
+import com.github.oryanmat.trellowidget.activity.MainActivity
 import com.github.oryanmat.trellowidget.model.Card
 import com.github.oryanmat.trellowidget.widget.TrelloWidgetProvider
 
@@ -45,3 +46,6 @@ internal fun createViewCardIntent(card: Card): Intent {
     val viewCardIntent = Intent(Intent.ACTION_VIEW, Uri.parse(card.url))
     return viewCardIntent
 }
+
+internal fun Context.createMainActivityIntent() =
+        Intent(this, MainActivity::class.java)

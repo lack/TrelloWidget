@@ -1,6 +1,5 @@
 package com.github.oryanmat.trellowidget.activity
 
-import android.app.Activity
 import android.appwidget.AppWidgetManager.EXTRA_APPWIDGET_ID
 import android.appwidget.AppWidgetManager.INVALID_APPWIDGET_ID
 import android.os.Bundle
@@ -10,7 +9,6 @@ import com.android.volley.Response
 import com.android.volley.VolleyError
 import com.github.oryanmat.trellowidget.R
 import com.github.oryanmat.trellowidget.T_WIDGET
-import com.github.oryanmat.trellowidget.TrelloWidget
 import com.github.oryanmat.trellowidget.model.NewCard
 import com.github.oryanmat.trellowidget.util.TrelloAPIUtil
 import com.github.oryanmat.trellowidget.util.getBoard
@@ -20,7 +18,7 @@ import com.github.oryanmat.trellowidget.util.createRefreshIntent
 import kotlinx.android.synthetic.main.activity_add_card.*
 import java.nio.charset.Charset
 
-class AddCardActivity : Activity() {
+class AddCardActivity : WritableActivity() {
     private var appWidgetId = INVALID_APPWIDGET_ID
     internal var cardsAdded = 0
     internal var addSingleCard = false
@@ -32,8 +30,6 @@ class AddCardActivity : Activity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val app = application as TrelloWidget
-        setTheme(app.dialogTheme)
 
         setContentView(R.layout.activity_add_card)
         val extras = intent.extras

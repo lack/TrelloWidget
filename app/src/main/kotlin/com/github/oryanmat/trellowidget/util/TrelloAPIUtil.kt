@@ -14,12 +14,11 @@ import com.github.oryanmat.trellowidget.model.BoardList
 import com.github.oryanmat.trellowidget.model.NewCard
 import java.util.concurrent.ExecutionException
 
-const val TOKEN_PREF_KEY = "com.oryanmat.trellowidget.usertoken"
-const val APP_KEY = "b250ef70ccf79ea5e107279a91045e6e"
-const val BASE_URL = "https://api.trello.com/"
-const val API_VERSION = "1/"
-const val KEY = "key=$APP_KEY"
-const val AUTH_URL = "https://trello.com/1/authorize" +
+val APP_KEY = "b250ef70ccf79ea5e107279a91045e6e"
+val BASE_URL = "https://api.trello.com/"
+val API_VERSION = "1/"
+val KEY = "key=$APP_KEY"
+val AUTH_URL = "https://trello.com/1/authorize" +
         "?name=TrelloWidget" +
         "&" + KEY +
         "&scope=read,write" +
@@ -34,7 +33,6 @@ const val CARDS = "cards/?"
 
 class TrelloAPIUtil private constructor(internal var context: Context) {
     internal val queue: RequestQueue by lazy { Volley.newRequestQueue(context) }
-    internal var preferences = context.preferences()
 
     companion object {
         lateinit var instance: TrelloAPIUtil
@@ -44,7 +42,7 @@ class TrelloAPIUtil private constructor(internal var context: Context) {
         }
     }
 
-    fun buildURL(query: String) = "$BASE_URL$API_VERSION$query$KEY&${preferences.getString(TOKEN_PREF_KEY, "")}"
+    private fun buildURL(query: String) = "$BASE_URL$API_VERSION$query$KEY&${context.getToken()}"
 
     fun user() = buildURL(USER)
 
