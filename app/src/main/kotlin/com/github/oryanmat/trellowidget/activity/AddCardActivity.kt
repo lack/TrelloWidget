@@ -1,6 +1,7 @@
 package com.github.oryanmat.trellowidget.activity
 
 import android.app.Activity
+import android.app.AlertDialog
 import android.appwidget.AppWidgetManager.EXTRA_APPWIDGET_ID
 import android.appwidget.AppWidgetManager.INVALID_APPWIDGET_ID
 import android.os.Bundle
@@ -35,6 +36,16 @@ class AddCardActivity : Activity() {
         val app = application as TrelloWidget
         setTheme(app.dialogTheme)
 
+        if (!sessionCanWrite()) {
+            AlertDialog.Builder(this)
+                    .setIcon(R.mipmap.logo)
+                    .setTitle(getString(R.string.add_card_relogin_required_title))
+                    .setMessage(getString(R.string.add_card_relogin_required_details))
+                    .setPositiveButton(android.R.string.ok, { _, _ -> relogin() })
+                    .setNegativeButton(android.R.string.cancel, { _, _ -> finish() })
+                    .show()
+            return
+        }
         setContentView(R.layout.activity_add_card)
         val extras = intent.extras
         if (extras != null) {
@@ -56,6 +67,12 @@ class AddCardActivity : Activity() {
         bottomButton.tintDrawables(theme, android.R.attr.colorForeground)
         setButtonsEnabled(true)
    }
+
+    private fun relogin() {
+        clearToken()
+        finish()
+        startActivity(createMainActivityIntent())
+    }
 
     private fun addNewCard(where: Location) {
         val newTitle = add_card_title.text.toString()

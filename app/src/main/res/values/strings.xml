@@ -20,6 +20,8 @@
     <string name="add_card_success">Added</string>
     <string name="add_card_permission_failure">Card failed to add.\nPlease try logging out and logging in again.</string>
     <string name="add_card_failure">Card failed to add.</string>
+    <string name="add_card_relogin_required_title">Re-login needed</string>
+    <string name="add_card_relogin_required_details">To add a card, your Trello session must be updated with write permissions.  You will be redirected to the login page to confirm the new permissions.</string>
 
     <!-- widget -->
     <string name="board_hint">Board name</string>

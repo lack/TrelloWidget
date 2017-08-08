@@ -5,12 +5,12 @@ import android.app.Fragment
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import com.github.oryanmat.trellowidget.R
+import com.github.oryanmat.trellowidget.T_WIDGET
 import com.github.oryanmat.trellowidget.TrelloWidget
-import com.github.oryanmat.trellowidget.util.AUTH_URL
-import com.github.oryanmat.trellowidget.util.TOKEN_PREF_KEY
-import com.github.oryanmat.trellowidget.util.preferences
+import com.github.oryanmat.trellowidget.util.*
 
 class MainActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -18,10 +18,8 @@ class MainActivity : Activity() {
         val app = application as TrelloWidget
         setTheme(app.appTheme)
         setContentView(R.layout.activity_main)
-
         if (savedInstanceState == null) {
-            val userToken = preferences().getString(TOKEN_PREF_KEY, "")
-            replaceFragment(if (userToken.isEmpty()) LoginFragment() else LoggedInFragment())
+            replaceFragment(if (hasToken()) LoggedInFragment() else LoginFragment())
         }
     }
 
@@ -41,17 +39,13 @@ class MainActivity : Activity() {
     }
 
     private fun saveUserToken(intent: Intent) {
-        preferences().edit()
-                .putString(TOKEN_PREF_KEY, intent.data.fragment)
-                .commit()
+        saveToken(intent.data.fragment)
 
         replaceFragment(LoggedInFragment())
     }
 
     @JvmOverloads fun logout(view: View? = null) {
-        preferences().edit()
-                .remove(TOKEN_PREF_KEY)
-                .commit()
+        clearToken()
 
         replaceFragment(LoginFragment())
     }
