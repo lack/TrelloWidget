@@ -27,14 +27,9 @@ internal fun Context.isTitleUniqueColor() =
 internal fun Context.isTitleEnabled() =
         isEnabled(R.string.pref_title_onclick_key)
 
-internal fun Context.showAddButton() =
-        isEnabled(R.string.pref_add_button_key)
-
-internal fun Context.showRefreshButton() =
-        isEnabled(R.string.pref_refresh_button_key)
-
-internal fun Context.showConfigButton() =
-        isEnabled(R.string.pref_config_button_key)
+internal fun Context.showTitleButton(@StringRes key: Int) =
+    sharedPreferences().getStringSet(getString(R.string.pref_title_buttons_key), emptySet())
+            .contains(getString(key))
 
 internal @ColorInt fun Context.getTitleBackgroundColor(): Int = when {
     isTitleUniqueColor() -> getColorPref(R.string.pref_title_back_color_key)

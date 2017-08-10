@@ -67,9 +67,9 @@ class TrelloWidgetProvider : AppWidgetProvider() {
         views.setOnClickPendingIntent(R.id.addButton, getAddPendingIntent(context, appWidgetId))
         views.setOnClickPendingIntent(R.id.refreshButt, getRefreshPendingIntent(context, appWidgetId))
         views.setOnClickPendingIntent(R.id.configButt, getReconfigPendingIntent(context, appWidgetId))
-        optionallyHideView(views, R.id.addButton, context.showAddButton())
-        optionallyHideView(views, R.id.refreshButt, context.showRefreshButton())
-        optionallyHideView(views, R.id.configButt, context.showConfigButton())
+        optionallyHideView(views, R.id.addButton, context.showTitleButton(R.string.pref_add_button_title))
+        optionallyHideView(views, R.id.refreshButt, context.showTitleButton(R.string.pref_refresh_button_title))
+        optionallyHideView(views, R.id.configButt, context.showTitleButton(R.string.pref_config_button_title))
 
         setImageViewColor(views, R.id.divider, foregroundColor)
     }

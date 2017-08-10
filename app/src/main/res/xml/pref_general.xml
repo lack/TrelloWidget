@@ -62,23 +62,14 @@
             android:summary="@string/pref_title_onclick_desc"
             android:title="@string/pref_title_onclick_title" />
 
-        <SwitchPreference
-            android:defaultValue="@bool/pref_add_button_default"
-            android:key="@string/pref_add_button_key"
-            android:summary="@string/pref_add_button_desc"
-            android:title="@string/pref_add_button_title" />
-
-        <SwitchPreference
-            android:defaultValue="@bool/pref_config_button_default"
-            android:key="@string/pref_config_button_key"
-            android:summary="@string/pref_config_button_desc"
-            android:title="@string/pref_config_button_title" />
-
-        <SwitchPreference
-            android:defaultValue="@bool/pref_refresh_button_default"
-            android:key="@string/pref_refresh_button_key"
-            android:summary="@string/pref_refresh_button_desc"
-            android:title="@string/pref_refresh_button_title" />
+        <MultiSelectListPreference
+            android:defaultValue="@array/pref_title_buttons_entries"
+            android:key="@string/pref_title_buttons_key"
+            android:summary="@string/pref_title_buttons_desc"
+            android:title="@string/pref_title_buttons_title"
+            android:entries="@array/pref_title_buttons_entries"
+            android:entryValues="@array/pref_title_buttons_entries"
+            />
 
     </PreferenceCategory>
     <PreferenceCategory

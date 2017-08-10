@@ -3,6 +3,7 @@ package com.github.oryanmat.trellowidget.activity
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.preference.ListPreference
+import android.preference.MultiSelectListPreference
 import android.preference.PreferenceFragment
 import android.preference.SwitchPreference
 import android.support.annotation.IdRes
@@ -30,6 +31,7 @@ class GeneralPreferenceFragment : PreferenceFragment() {
         listener.onSharedPreferenceChanged(preferences, getString(R.string.pref_update_interval_key))
         listener.onSharedPreferenceChanged(preferences, getString(R.string.pref_display_board_name_key))
         listener.onSharedPreferenceChanged(preferences, getString(R.string.pref_ui_theme_dark_key))
+        listener.onSharedPreferenceChanged(preferences, getString(R.string.pref_title_buttons_key))
 
         val titleBackgroundPref = colorPreference(R.string.pref_title_back_color_key)
         titleBackgroundPref.copyData = colorPreference(R.string.pref_back_color_key).asColorData()
@@ -86,6 +88,10 @@ class GeneralPreferenceFragment : PreferenceFragment() {
             val changed = app.loadThemes()
             if (changed) {
                 activity.recreate()
+            }
+        } else if (key == getString(R.string.pref_title_buttons_key)) {
+            with(findPreference(key) as MultiSelectListPreference) {
+                summary = if (values.isEmpty()) "None" else values.joinToString()
             }
         }
     }

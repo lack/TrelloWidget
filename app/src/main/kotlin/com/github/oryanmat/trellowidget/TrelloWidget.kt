@@ -23,7 +23,7 @@ class TrelloWidget : Application() {
     override fun onCreate() {
         if (DEBUG) StrictMode.enableDefaults()
         super.onCreate()
-        PreferenceManager.setDefaultValues(applicationContext, R.xml.pref_general, false)
+        PreferenceManager.setDefaultValues(applicationContext, R.xml.pref_general, true)
         loadThemes()
         TrelloAPIUtil.init(applicationContext)
         Executors.callable { scheduleAlarm(this@TrelloWidget) }.call()
