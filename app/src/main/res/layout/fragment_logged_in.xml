@@ -1,37 +1,34 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="@dimen/default_padding"
-    tools:context="com.github.oryanmat.trellowidget.activity.LoggedInFragment">
+                 xmlns:tools="http://schemas.android.com/tools"
+                 android:layout_width="match_parent"
+                 android:layout_height="match_parent"
+                 android:padding="@dimen/default_padding"
+                 tools:context="com.github.oryanmat.trellowidget.activity.LoggedInFragment">
 
-    <ProgressBar
-        android:id="@+id/loading_panel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center" />
+        <ProgressBar
+                android:id="@+id/loading_panel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"/>
 
-    <FrameLayout
-        android:id="@+id/signed_panel"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone">
-
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" android:id="@+id/signed_panel">
         <TextView
-            android:id="@+id/signed_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start|top"
-            android:text="@string/singed"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
-
+                android:id="@+id/signed_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start|top"
+                android:text="@string/singed"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
         <Button
-            android:id="@+id/logout_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end|bottom"
-            android:onClick="logout"
-            android:text="@string/logout" />
-    </FrameLayout>
+                android:id="@+id/logout_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end|bottom"
+                android:onClick="logout"
+                android:text="@string/logout"/>
+    </LinearLayout>
 
 </FrameLayout>

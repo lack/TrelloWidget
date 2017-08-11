@@ -2,9 +2,9 @@ package com.github.oryanmat.trellowidget.activity
 
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.preference.ListPreference
-import android.preference.PreferenceFragment
-import android.preference.SwitchPreference
+import android.support.v7.preference.ListPreference
+import android.support.v7.preference.PreferenceFragmentCompat
+import android.support.v7.preference.SwitchPreferenceCompat
 import android.support.annotation.IdRes
 import com.github.oryanmat.trellowidget.R
 import com.github.oryanmat.trellowidget.TrelloWidget
@@ -12,12 +12,12 @@ import com.github.oryanmat.trellowidget.util.color.ColorPreference
 import com.github.oryanmat.trellowidget.widget.updateWidgets
 import com.github.oryanmat.trellowidget.widget.updateWidgetsData
 
-class GeneralPreferenceFragment : PreferenceFragment() {
+class GeneralPreferenceFragment : PreferenceFragmentCompat() {
     val COLOR_FORMAT = "#%08X"
     val listener = SharedPreferences.OnSharedPreferenceChangeListener { prefs, key -> setPreferenceChanges(key) }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
+        //super.onCreatePreferences(savedInstanceState, rootKey)
         addPreferencesFromResource(R.xml.pref_general)
 
         val preferences = preferenceScreen.sharedPreferences
@@ -71,15 +71,16 @@ class GeneralPreferenceFragment : PreferenceFragment() {
         } else if (key == getString(R.string.pref_title_fore_color_key)) {
             val preference = findPreference(key) as ColorPreference
             preference.summary = String.format(COLOR_FORMAT, preference.color)
-        } else if (key == getString(R.string.pref_title_use_unique_color_key)) {
+        /*} else if (key == getString(R.string.pref_title_use_unique_color_key)) {
             val preference = findPreference(key) as SwitchPreference
             with(preference) {
                 summary = getString(R.string.pref_title_use_unique_color_desc)
                 colorPreference(R.string.pref_title_fore_color_key).isEnabled = isChecked
                 colorPreference(R.string.pref_title_back_color_key).isEnabled = isChecked
             }
+            */
         } else if (key == getString(R.string.pref_display_board_name_key)) {
-            val preference = findPreference(key) as SwitchPreference
+            val preference = findPreference(key) as SwitchPreferenceCompat
             preference.summary = activity.getString(R.string.pref_display_board_name_desc)
         } else if (key == getString(R.string.pref_ui_theme_dark_key)) {
             val app = activity.application as TrelloWidget

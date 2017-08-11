@@ -19,7 +19,7 @@ import java.util.*
 import java.util.concurrent.TimeUnit
 import kotlin.concurrent.schedule
 
-class LoggedInFragment : Fragment(), Response.Listener<String>, Response.ErrorListener {
+class LoggedInFragment : android.support.v4.app.Fragment(), Response.Listener<String>, Response.ErrorListener {
     private val USER = "com.github.oryanmat.trellowidget.activity.user"
     private val VISIBILITY = "com.github.oryanmat.trellowidget.activity.visibility"
     private val MAX_LOGIN_FAIL = 3
@@ -34,12 +34,18 @@ class LoggedInFragment : Fragment(), Response.Listener<String>, Response.ErrorLi
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        Log.i(T_WIDGET, "Activity created...")
         val visibility = savedInstanceState?.getInt(VISIBILITY, View.VISIBLE) ?: View.VISIBLE
 
         if (visibility == View.GONE) {
+            Log.i(T_WIDGET, "Visibility = GONE")
             val userJson = savedInstanceState?.getString(USER) ?: ""
             setUser(Json.tryParseJson(userJson, User::class.java, User()))
         } else {
+            Log.i(T_WIDGET, "Visibility = VISIBLE")
+            val v = view
+            v!!.loading_panel.visibility = View.VISIBLE
+            v.signed_panel.visibility = View.INVISIBLE
             login()
         }
     }
@@ -57,6 +63,7 @@ class LoggedInFragment : Fragment(), Response.Listener<String>, Response.ErrorLi
     }
 
     private fun login() {
+        Log.i(T_WIDGET, "Doing login")
         loginAttempts++
         TrelloAPIUtil.instance.getUserAsync(this, this)
     }
@@ -73,16 +80,18 @@ class LoggedInFragment : Fragment(), Response.Listener<String>, Response.ErrorLi
 
     private fun setUser(user: User) {
         this.user = user
-        view ?: return
-        view.signed_text.text = getString(R.string.singed).format(user)
-        view.loading_panel.visibility = View.GONE
-        view.signed_panel.visibility = View.VISIBLE
+        val v = view
+        v ?: return
+        v.signed_text.text = getString(R.string.singed).format(user)
+        v.loading_panel.visibility = View.GONE
+        v.signed_panel.visibility = View.VISIBLE
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        view ?: return
-        outState.putInt(VISIBILITY, view.loading_panel.visibility)
+        val v = view
+        v ?: return
+        outState.putInt(VISIBILITY, v.loading_panel.visibility)
         outState.putString(USER, Json.toJson(user))
     }
 }

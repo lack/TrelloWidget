@@ -1,9 +1,13 @@
 <resources>
 
-    <style name="AppTheme" parent="android:Theme.DeviceDefault" />
-    <style name="DialogTheme" parent="android:Theme.DeviceDefault.Dialog.NoActionBar" />
-    <style name="AppThemeLight" parent="android:Theme.DeviceDefault.Light" />
-    <style name="DialogThemeLight" parent="android:Theme.DeviceDefault.Light.Dialog.NoActionBar" />
+    <style name="AppTheme" parent="@style/Theme.AppCompat">
+        <item name="preferenceTheme">@style/PreferenceThemeOverlay</item>
+    </style>
+    <style name="DialogTheme" parent="@style/Theme.AppCompat.Dialog" />
+    <style name="AppThemeLight" parent="@style/Theme.AppCompat.Light">
+        <item name="preferenceTheme">@style/PreferenceThemeOverlay</item>
+    </style>
+    <style name="DialogThemeLight" parent="@style/Theme.AppCompat.Light.Dialog" />
     <color name="dialogButtonFg">#ffffff</color>
 
     <style name="WidgetTitle">

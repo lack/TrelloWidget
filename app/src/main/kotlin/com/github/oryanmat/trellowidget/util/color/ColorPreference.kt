@@ -3,7 +3,8 @@ package com.github.oryanmat.trellowidget.util.color
 import android.content.Context
 import android.content.res.TypedArray
 import android.graphics.Color
-import android.preference.DialogPreference
+import android.support.v7.preference.DialogPreference
+//import android.preference.DialogPreference
 import android.util.AttributeSet
 import android.view.View
 import com.github.oryanmat.trellowidget.R
@@ -26,11 +27,11 @@ class ColorPreference @JvmOverloads constructor(
         dialogLayoutResource = R.layout.color_chooser
     }
 
-    override fun onBindDialogView(view: View) {
+    /*override fun onBindDialogView(view: View) {
         super.onBindDialogView(view)
         initPicker(view)
         initCopyButton(view)
-    }
+    }*/
 
     private fun ColorPreference.initPicker(view: View) = with(view.color_picker) {
         addSVBar(view.svbar)
@@ -50,11 +51,11 @@ class ColorPreference @JvmOverloads constructor(
         }
     }
 
-    override fun onDialogClosed(positiveResult: Boolean) {
+    /*override fun onDialogClosed(positiveResult: Boolean) {
         if (positiveResult) {
             persistInt(color)
         }
-    }
+    }*/
 
     override fun onSetInitialValue(restorePersistedValue: Boolean, defaultValue: Any?) {
         if (restorePersistedValue) {

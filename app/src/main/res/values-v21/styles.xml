@@ -1,22 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="AppTheme" parent="android:Theme.DeviceDefault">
+    <style name="AppTheme" parent="@style/Theme.AppCompat">
+        <item name="android:colorPrimary">@color/primary</item>
+        <item name="android:colorPrimaryDark">@color/primary_dark</item>
+        <item name="android:colorAccent">@color/accent</item>
+        <item name="preferenceTheme">@style/PreferenceThemeOverlay</item>
+    </style>
+    <style name="DialogTheme" parent="@style/Theme.AppCompat.Dialog">
         <item name="android:colorPrimary">@color/primary</item>
         <item name="android:colorPrimaryDark">@color/primary_dark</item>
         <item name="android:colorAccent">@color/accent</item>
     </style>
-    <style name="DialogTheme" parent="android:Theme.DeviceDefault.Dialog.NoActionBar">
-        <item name="android:colorPrimary">@color/primary</item>
-        <item name="android:colorPrimaryDark">@color/primary_dark</item>
-        <item name="android:colorAccent">@color/accent</item>
-    </style>
-    <style name="AppThemeLight" parent="android:Theme.DeviceDefault.Light">
+    <style name="AppThemeLight" parent="@style/Theme.AppCompat.Light">
         <item name="android:colorPrimary">@color/light_primary</item>
         <item name="android:colorPrimaryDark">@color/light_primary_dark</item>
         <item name="android:colorAccent">@color/light_accent</item>
+        <item name="preferenceTheme">@style/PreferenceThemeOverlay</item>
     </style>
-    <style name="DialogThemeLight" parent="android:Theme.DeviceDefault.Light.Dialog.NoActionBar">
+    <style name="DialogThemeLight" parent="@style/Theme.AppCompat.Light.Dialog">
         <item name="android:colorPrimary">@color/light_primary</item>
         <item name="android:colorPrimaryDark">@color/light_primary_dark</item>
         <item name="android:colorAccent">@color/light_accent</item>

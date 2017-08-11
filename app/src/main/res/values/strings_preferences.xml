@@ -78,8 +78,8 @@
     </string-array>
 
     <string name="pref_title_onclick_key">title_onclick</string>
-    <string name="pref_title_onclick_title">Open Trello</string>
-    <string name="pref_title_onclick_desc">Press the widget\'s title to open Trello</string>
+    <string name="pref_title_onclick_title">Title click opens Trello</string>
+    <string name="pref_title_onclick_desc">Press the widget\'s title to open the current Trello board</string>
     <bool name="pref_title_onclick_default">true</bool>
 
     <string name="ui_prefs_title">UI Settings</string>
