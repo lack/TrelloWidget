@@ -86,6 +86,12 @@
             android:summary="@string/pref_move_button_desc"
             android:title="@string/pref_move_button_title" />
 
+        <SwitchPreference
+            android:defaultValue="@bool/pref_card_multiline_default"
+            android:key="@string/pref_card_multiline_key"
+            android:summary="@string/pref_card_multiline_desc"
+            android:title="@string/pref_card_multiline_title"/>
+
     </PreferenceCategory>
     <PreferenceCategory
             android:title="@string/ui_prefs_title">

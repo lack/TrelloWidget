@@ -7,6 +7,7 @@ import android.graphics.Color.*
 import android.graphics.drawable.BitmapDrawable
 import android.support.annotation.*
 import android.support.v4.content.ContextCompat
+import android.text.TextUtils
 import android.util.TypedValue
 import android.view.View
 import android.widget.RemoteViews
@@ -29,6 +30,15 @@ object RemoteViewsUtil {
                     text: String, @ColorInt color: Int) {
         views.setTextViewText(textView, text)
         views.setTextColor(textView, color)
+    }
+
+    fun setTextViewMultiline(views: RemoteViews, @IdRes textView: Int,
+                           multiline: Boolean) {
+        if (multiline) {
+            views.setInt(textView, "setMaxLines", 10)
+        } else {
+            views.setInt(textView, "setMaxLines", 1)
+        }
     }
 
     fun setImage(context: Context, views: RemoteViews,
