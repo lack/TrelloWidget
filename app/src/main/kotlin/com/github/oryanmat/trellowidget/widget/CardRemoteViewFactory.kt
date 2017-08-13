@@ -18,6 +18,7 @@ import com.github.oryanmat.trellowidget.util.RemoteViewsUtil.optionallyHideView
 import com.github.oryanmat.trellowidget.util.RemoteViewsUtil.setImage
 import com.github.oryanmat.trellowidget.util.RemoteViewsUtil.setImageViewColor
 import com.github.oryanmat.trellowidget.util.RemoteViewsUtil.setTextView
+import com.github.oryanmat.trellowidget.util.RemoteViewsUtil.setTextViewMultiline
 import com.github.oryanmat.trellowidget.util.color.lightDim
 import com.github.oryanmat.trellowidget.util.color.colors
 import com.github.oryanmat.trellowidget.util.color.dim
@@ -69,6 +70,7 @@ class CardRemoteViewFactory(private val context: Context,
 
     private fun setTitle(views: RemoteViews, card: Card) {
         setTextView(context, views, R.id.card_title, card.name, color, R.dimen.card_badges_text)
+        setTextViewMultiline(views, R.id.card_title, context.cardTitleMultiline())
     }
 
     private fun setSubscribed(views: RemoteViews, card: Card) {

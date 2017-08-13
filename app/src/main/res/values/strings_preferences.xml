@@ -102,4 +102,9 @@
     <string name="pref_move_button_desc">Include a move button for each card</string>
     <bool name="pref_move_button_default">true</bool>
 
+    <string name="pref_card_multiline_key">card_multiline</string>
+    <string name="pref_card_multiline_title">Multi-line card titles</string>
+    <string name="pref_card_multiline_desc">Allow card text to split into multiple lines</string>
+    <bool name="pref_card_multiline_default">true</bool>
+
 </resources>
