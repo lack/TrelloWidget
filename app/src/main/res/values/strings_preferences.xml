@@ -1,5 +1,9 @@
 <resources>
-    <string name="pref_title">Widget Settings</string>
+    <string name="pref_widget_behavior_category">Widget Behavior</string>
+    <string name="pref_widget_appearance_category">Widget Appearance</string>
+    <string name="pref_widget_title_category">Widget Title</string>
+    <string name="pref_widget_body_category">Widget Body</string>
+    <string name="pref_ui_appearance_category">UI Appearance</string>
 
     <string name="pref_text_size_key">text_size_scale</string>
     <string name="pref_text_size_title">Text size</string>
@@ -83,8 +87,8 @@
     </string-array>
 
     <string name="pref_title_onclick_key">title_onclick</string>
-    <string name="pref_title_onclick_title">Open Trello</string>
-    <string name="pref_title_onclick_desc">Press the widget\'s title to open Trello</string>
+    <string name="pref_title_onclick_title">Title opens Trello</string>
+    <string name="pref_title_onclick_desc">Press the widget\'s title to open the board in Trello</string>
     <bool name="pref_title_onclick_default">true</bool>
 
     <string name="pref_config_button_key">has_config_button</string>
