@@ -1,112 +1,111 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <PreferenceCategory
-        android:key="pref_key_storage_settings"
-        android:title="@string/pref_title">
+            android:key="pref_widget_behavior_settings"
+            android:title="@string/pref_widget_behavior_category">
         <ListPreference
-            android:defaultValue="@string/pref_text_size_default"
-            android:entries="@array/pref_text_size_entries"
-            android:entryValues="@array/pref_text_size_values"
-            android:key="@string/pref_text_size_key"
-            android:summary="@string/pref_text_size_desc"
-            android:title="@string/pref_text_size_title" />
-
-        <com.github.oryanmat.trellowidget.util.color.ColorPreference
-            android:defaultValue="@integer/pref_back_color_default"
-            android:key="@string/pref_back_color_key"
-            android:summary="@string/pref_back_color_desc"
-            android:title="@string/pref_back_color_title" />
-
-        <com.github.oryanmat.trellowidget.util.color.ColorPreference
-            android:defaultValue="@integer/pref_fore_color_default"
-            android:key="@string/pref_fore_color_key"
-            android:summary="@string/pref_fore_color_desc"
-            android:title="@string/pref_fore_color_title" />
-
-        <com.github.oryanmat.trellowidget.util.color.ColorPreference
-            android:defaultValue="@integer/pref_title_back_color_default"
-            android:key="@string/pref_title_back_color_key"
-            android:summary="@string/pref_title_back_color_desc"
-            android:title="@string/pref_title_back_color_title" />
-
-        <com.github.oryanmat.trellowidget.util.color.ColorPreference
-            android:defaultValue="@integer/pref_title_fore_color_default"
-            android:key="@string/pref_title_fore_color_key"
-            android:summary="@string/pref_title_fore_color_desc"
-            android:title="@string/pref_title_fore_color_title" />
-
+                android:defaultValue="@string/pref_update_interval_default"
+                android:entries="@array/pref_update_interval_titles"
+                android:entryValues="@array/pref_update_interval_values"
+                android:key="@string/pref_update_interval_key"
+                android:negativeButtonText="@null"
+                android:positiveButtonText="@null"
+                android:summary="@string/pref_update_interval_desc"
+                android:title="@string/pref_update_interval_title" />
         <SwitchPreference
-            android:defaultValue="@bool/pref_title_use_unique_color_default"
-            android:key="@string/pref_title_use_unique_color_key"
-            android:summary="@string/pref_title_use_unique_color_desc"
-            android:title="@string/pref_title_use_unique_color_title" />
-
-        <SwitchPreference
-            android:defaultValue="@bool/pref_display_board_name_default"
-            android:key="@string/pref_display_board_name_key"
-            android:summary="@string/pref_display_board_name_desc"
-            android:title="@string/pref_display_board_name_title" />
-
-        <SwitchPreference
-            android:defaultValue="@bool/pref_title_twoline_default"
-            android:key="@string/pref_title_twoline_key"
-            android:summary="@string/pref_title_twoline_desc"
-            android:title="@string/pref_title_twoline_title"
-            android:dependency="@string/pref_display_board_name_key"/>
-
-        <ListPreference
-            android:defaultValue="@string/pref_update_interval_default"
-            android:entries="@array/pref_update_interval_titles"
-            android:entryValues="@array/pref_update_interval_values"
-            android:key="@string/pref_update_interval_key"
-            android:negativeButtonText="@null"
-            android:positiveButtonText="@null"
-            android:summary="@string/pref_update_interval_desc"
-            android:title="@string/pref_update_interval_title" />
-
-        <SwitchPreference
-            android:defaultValue="@bool/pref_title_onclick_default"
-            android:key="@string/pref_title_onclick_key"
-            android:summary="@string/pref_title_onclick_desc"
-            android:title="@string/pref_title_onclick_title" />
-
-        <SwitchPreference
-            android:defaultValue="@bool/pref_add_button_default"
-            android:key="@string/pref_add_button_key"
-            android:summary="@string/pref_add_button_desc"
-            android:title="@string/pref_add_button_title" />
-
-        <SwitchPreference
-            android:defaultValue="@bool/pref_config_button_default"
-            android:key="@string/pref_config_button_key"
-            android:summary="@string/pref_config_button_desc"
-            android:title="@string/pref_config_button_title" />
-
-        <SwitchPreference
-            android:defaultValue="@bool/pref_refresh_button_default"
-            android:key="@string/pref_refresh_button_key"
-            android:summary="@string/pref_refresh_button_desc"
-            android:title="@string/pref_refresh_button_title" />
-
-        <SwitchPreference
-            android:defaultValue="@bool/pref_move_button_default"
-            android:key="@string/pref_move_button_key"
-            android:summary="@string/pref_move_button_desc"
-            android:title="@string/pref_move_button_title" />
-
-        <SwitchPreference
-            android:defaultValue="@bool/pref_card_multiline_default"
-            android:key="@string/pref_card_multiline_key"
-            android:summary="@string/pref_card_multiline_desc"
-            android:title="@string/pref_card_multiline_title"/>
-
+                android:defaultValue="@bool/pref_title_onclick_default"
+                android:key="@string/pref_title_onclick_key"
+                android:summary="@string/pref_title_onclick_desc"
+                android:title="@string/pref_title_onclick_title" />
     </PreferenceCategory>
     <PreferenceCategory
-            android:title="@string/ui_prefs_title">
+            android:key="pref_widget_appearance_settings"
+            android:title="@string/pref_widget_appearance_category">
+        <ListPreference
+                android:defaultValue="@string/pref_text_size_default"
+                android:entries="@array/pref_text_size_entries"
+                android:entryValues="@array/pref_text_size_values"
+                android:key="@string/pref_text_size_key"
+                android:summary="@string/pref_text_size_desc"
+                android:title="@string/pref_text_size_title" />
+        <com.github.oryanmat.trellowidget.util.color.ColorPreference
+                android:defaultValue="@integer/pref_back_color_default"
+                android:key="@string/pref_back_color_key"
+                android:summary="@string/pref_back_color_desc"
+                android:title="@string/pref_back_color_title" />
+        <com.github.oryanmat.trellowidget.util.color.ColorPreference
+                android:defaultValue="@integer/pref_fore_color_default"
+                android:key="@string/pref_fore_color_key"
+                android:summary="@string/pref_fore_color_desc"
+                android:title="@string/pref_fore_color_title" />
+    </PreferenceCategory>
+    <PreferenceCategory
+            android:key="pref_widget_title_settings"
+            android:title="@string/pref_widget_title_category">
+        <SwitchPreference
+                android:defaultValue="@bool/pref_display_board_name_default"
+                android:key="@string/pref_display_board_name_key"
+                android:summary="@string/pref_display_board_name_desc"
+                android:title="@string/pref_display_board_name_title" />
+        <SwitchPreference
+                android:defaultValue="@bool/pref_title_twoline_default"
+                android:key="@string/pref_title_twoline_key"
+                android:summary="@string/pref_title_twoline_desc"
+                android:title="@string/pref_title_twoline_title"
+                android:dependency="@string/pref_display_board_name_key"/>
+        <SwitchPreference
+                android:defaultValue="@bool/pref_title_use_unique_color_default"
+                android:key="@string/pref_title_use_unique_color_key"
+                android:summary="@string/pref_title_use_unique_color_desc"
+                android:title="@string/pref_title_use_unique_color_title" />
+        <com.github.oryanmat.trellowidget.util.color.ColorPreference
+                android:defaultValue="@integer/pref_title_back_color_default"
+                android:key="@string/pref_title_back_color_key"
+                android:summary="@string/pref_title_back_color_desc"
+                android:title="@string/pref_title_back_color_title"
+                android:dependency="@string/pref_title_use_unique_color_key" />
+        <com.github.oryanmat.trellowidget.util.color.ColorPreference
+                android:defaultValue="@integer/pref_title_fore_color_default"
+                android:key="@string/pref_title_fore_color_key"
+                android:summary="@string/pref_title_fore_color_desc"
+                android:title="@string/pref_title_fore_color_title"
+                android:dependency="@string/pref_title_use_unique_color_key" />
+        <SwitchPreference
+                android:defaultValue="@bool/pref_add_button_default"
+                android:key="@string/pref_add_button_key"
+                android:summary="@string/pref_add_button_desc"
+                android:title="@string/pref_add_button_title" />
+        <SwitchPreference
+                android:defaultValue="@bool/pref_config_button_default"
+                android:key="@string/pref_config_button_key"
+                android:summary="@string/pref_config_button_desc"
+                android:title="@string/pref_config_button_title" />
+        <SwitchPreference
+                android:defaultValue="@bool/pref_refresh_button_default"
+                android:key="@string/pref_refresh_button_key"
+                android:summary="@string/pref_refresh_button_desc"
+                android:title="@string/pref_refresh_button_title" />
+    </PreferenceCategory>
+    <PreferenceCategory
+            android:key="pref_widget_body_settings"
+            android:title="@string/pref_widget_body_category">
+        <SwitchPreference
+                android:defaultValue="@bool/pref_card_multiline_default"
+                android:key="@string/pref_card_multiline_key"
+                android:summary="@string/pref_card_multiline_desc"
+                android:title="@string/pref_card_multiline_title"/>
+        <SwitchPreference
+                android:defaultValue="@bool/pref_move_button_default"
+                android:key="@string/pref_move_button_key"
+                android:summary="@string/pref_move_button_desc"
+                android:title="@string/pref_move_button_title" />
+    </PreferenceCategory>
+    <PreferenceCategory
+            android:key="pref_ui_appearance_settings"
+            android:title="@string/pref_ui_appearance_category">
         <SwitchPreference
                 android:defaultValue="@bool/pref_ui_theme_dark_default"
                 android:key="@string/pref_ui_theme_dark_key"
                 android:summary="@string/pref_ui_theme_dark_desc"
                 android:title="@string/pref_ui_theme_dark_title" />
     </PreferenceCategory>
-
 </PreferenceScreen>
