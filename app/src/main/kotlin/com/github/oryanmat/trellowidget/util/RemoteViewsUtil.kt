@@ -7,7 +7,6 @@ import android.graphics.Color.*
 import android.graphics.drawable.BitmapDrawable
 import android.support.annotation.*
 import android.support.v4.content.ContextCompat
-import android.text.TextUtils
 import android.util.TypedValue
 import android.view.View
 import android.widget.RemoteViews
@@ -19,7 +18,7 @@ object RemoteViewsUtil {
     internal val IMAGE_SCALE = .75
 
     fun setTextView(context: Context, views: RemoteViews,
-                    @IdRes textView: Int, text: String,
+                    @IdRes textView: Int, text: CharSequence,
                     @ColorInt color: Int, @DimenRes dimen: Int) {
         setTextView(views, textView, text, color)
         views.setTextViewTextSize(textView, TypedValue.COMPLEX_UNIT_SP,
@@ -27,7 +26,7 @@ object RemoteViewsUtil {
     }
 
     fun setTextView(views: RemoteViews, @IdRes textView: Int,
-                    text: String, @ColorInt color: Int) {
+                    text: CharSequence, @ColorInt color: Int) {
         views.setTextViewText(textView, text)
         views.setTextColor(textView, color)
     }

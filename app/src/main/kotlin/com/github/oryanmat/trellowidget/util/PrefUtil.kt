@@ -21,6 +21,9 @@ internal @ColorInt fun Context.getCardForegroundColor() =
 internal fun Context.displayBoardName() =
         isEnabled(R.string.pref_display_board_name_key)
 
+internal fun Context.isTitleTwoline() =
+        isEnabled(R.string.pref_title_twoline_key)
+
 internal fun Context.isTitleUniqueColor() =
         isEnabled(R.string.pref_title_use_unique_color_key)
 

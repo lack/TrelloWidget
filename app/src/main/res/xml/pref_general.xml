@@ -46,6 +46,13 @@
             android:summary="@string/pref_display_board_name_desc"
             android:title="@string/pref_display_board_name_title" />
 
+        <SwitchPreference
+            android:defaultValue="@bool/pref_title_twoline_default"
+            android:key="@string/pref_title_twoline_key"
+            android:summary="@string/pref_title_twoline_desc"
+            android:title="@string/pref_title_twoline_title"
+            android:dependency="@string/pref_display_board_name_key"/>
+
         <ListPreference
             android:defaultValue="@string/pref_update_interval_default"
             android:entries="@array/pref_update_interval_titles"
