@@ -5,11 +5,18 @@ import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
 import android.content.Context
 import android.content.Intent
+import android.graphics.Typeface
 import android.net.Uri
 import android.support.annotation.ColorInt
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.style.StyleSpan
+import android.util.Log
 import android.view.View
+import android.widget.LinearLayout
 import android.widget.RemoteViews
 import com.github.oryanmat.trellowidget.R
+import com.github.oryanmat.trellowidget.T_WIDGET
 import com.github.oryanmat.trellowidget.model.Board
 import com.github.oryanmat.trellowidget.util.*
 import com.github.oryanmat.trellowidget.util.RemoteViewsUtil.setBackgroundColor
@@ -53,15 +60,28 @@ class TrelloWidgetProvider : AppWidgetProvider() {
         @ColorInt val foregroundColor = context.getTitleForegroundColor()
 
         setBackgroundColor(views, R.id.title_bar, context.getTitleBackgroundColor())
-        views.setViewVisibility(R.id.board_name,
-                if (context.displayBoardName()) View.VISIBLE else View.GONE)
-        setTextView(context, views, R.id.board_name, board.name + " / ", foregroundColor, R.dimen.widget_title_text)
-        setTextView(context, views, R.id.list_name, list.name, foregroundColor, R.dimen.widget_title_text)
+        var imageScale = RemoteViewsUtil.IMAGE_SCALE
+        if (context.isTitleTwoline() && context.displayBoardName()) {
+            views.setViewVisibility(R.id.board_name, View.VISIBLE)
+            setTextView(context, views, R.id.board_name, board.name, foregroundColor, R.dimen.widget_subtitle_text)
+            setTextView(context, views, R.id.list_name, list.name, foregroundColor, R.dimen.widget_title_text)
+            imageScale = 1.0
+        } else {
+            views.setViewVisibility(R.id.board_name, View.GONE)
+
+            val titleString = SpannableString(if (context.displayBoardName())
+                board.name + " / " + list.name
+            else
+                list.name)
+            val styleStart = if (context.displayBoardName()) board.name.length + 3 else 0
+            titleString.setSpan(StyleSpan(Typeface.BOLD), styleStart, titleString.length, Spannable.SPAN_EXCLUSIVE_INCLUSIVE)
+            setTextView(context, views, R.id.list_name, titleString, foregroundColor, R.dimen.widget_title_text)
+        }
         views.setOnClickPendingIntent(R.id.list_title, getTitleIntent(context, board))
 
-        setImage(context, views, R.id.addButton, R.drawable.ic_add_box_white_24dp)
-        setImage(context, views, R.id.refreshButt, R.drawable.ic_refresh_white_24dp)
-        setImage(context, views, R.id.configButt, R.drawable.ic_settings_white_24dp)
+        setImage(context, views, R.id.addButton, R.drawable.ic_add_box_white_24dp, imageScale)
+        setImage(context, views, R.id.refreshButt, R.drawable.ic_refresh_white_24dp, imageScale)
+        setImage(context, views, R.id.configButt, R.drawable.ic_settings_white_24dp, imageScale)
         setImageViewColor(views, R.id.addButton, foregroundColor.lightDim())
         setImageViewColor(views, R.id.refreshButt, foregroundColor.lightDim())
         setImageViewColor(views, R.id.configButt, foregroundColor.lightDim())

@@ -15,13 +15,13 @@
     <style name="BoardTitle">
         <item name="android:textColor">#ffffff</item>
         <item name="android:textStyle">normal</item>
-        <item name="android:textSize">20sp</item>
+        <item name="android:textSize">@dimen/widget_subtitle_text</item>
     </style>
 
     <style name="ListTitle">
         <item name="android:textColor">#ffffff</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">@dimen/widget_title_text</item>
     </style>
 
     <style name="WidgetItemBadge">

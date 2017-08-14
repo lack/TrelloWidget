@@ -62,6 +62,11 @@
     <string name="pref_display_board_name_desc">Display board name in the widget title</string>
     <bool name="pref_display_board_name_default">false</bool>
 
+    <string name="pref_title_twoline_key">two_line_title</string>
+    <string name="pref_title_twoline_title">Two-line widget title</string>
+    <string name="pref_title_twoline_desc">Display the board name above the list name in the widget title</string>
+    <bool name="pref_title_twoline_default">false</bool>
+
     <string-array name="pref_update_interval_titles">
         <item>15 minutes</item>
         <item>half hour</item>
