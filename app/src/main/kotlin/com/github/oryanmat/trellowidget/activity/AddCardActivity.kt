@@ -6,6 +6,7 @@ import android.appwidget.AppWidgetManager.EXTRA_APPWIDGET_ID
 import android.appwidget.AppWidgetManager.INVALID_APPWIDGET_ID
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import com.android.volley.VolleyError
 import com.github.oryanmat.trellowidget.R
@@ -89,7 +90,6 @@ class AddCardActivity : Activity() {
         Log.d(T_WIDGET, "Adding new card to ${if (where == Location.INSERT_AT_TOP) "top" else "bottom"} of $description: $newTitle")
         val listener = AddCardListener(description)
         TrelloAPIUtil.instance.addNewCard(newCard, listener)
-        // TODO: Start a spinner or something?
     }
 
     inner class AddCardListener(private val description: String) : TrelloAPIUtil.CardResponseListener() {
@@ -137,6 +137,7 @@ class AddCardActivity : Activity() {
     private fun setButtonsEnabled(enabled: Boolean) {
         for (button in arrayOf(addCloseButton, topButton, bottomButton))
             button.isEnabled = enabled
+        add_card_progress.visibility = if (enabled) View.GONE else View.VISIBLE
     }
 
     private fun close() {
