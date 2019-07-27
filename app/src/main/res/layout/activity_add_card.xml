@@ -1,0 +1,89 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    tools:context="com.github.oryanmat.trellowidget.activity.AddCardActivity">
+
+    <LinearLayout
+        android:id="@+id/linear"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="8dp">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/add_card_dialog_title"
+                    style="@style/Base.DialogWindowTitle.AppCompat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/add_card_dialog_title" />
+
+                <TextView
+                    android:id="@+id/add_card_board_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:baselineAligned="false"
+                    android:ellipsize="end"
+                    android:lines="1"
+                    android:text="@string/add_card_board_name" />
+            </LinearLayout>
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/addCloseButton"
+                android:src="@drawable/ic_close_black_24dp"
+                android:tint="?android:colorForeground"
+                android:layout_gravity="top|end"
+                android:contentDescription="@string/add_card_close_hint" />
+
+        </LinearLayout>
+
+        <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/add_card_title"
+            android:imeOptions="actionNone"
+            android:inputType="textCapSentences"
+            android:hint="@string/add_card_title_hint" />
+
+        <LinearLayout
+            style="?android:buttonBarStyle"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/add_end"
+                android:drawableLeft="@drawable/ic_vertical_align_bottom_black_24dp"
+                android:id="@+id/bottomButton"
+                style="?android:buttonBarButtonStyle"
+                android:layout_weight="1"
+                android:layout_gravity="start|center_vertical" />
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/add_top"
+                android:drawableLeft="@drawable/ic_vertical_align_top_black_24dp"
+                android:id="@+id/topButton"
+                style="?android:buttonBarButtonStyle"
+                android:layout_weight="1"
+                android:layout_gravity="start|center_vertical" />
+
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>

@@ -50,6 +50,12 @@
             </LinearLayout>
 
             <ImageButton
+                android:id="@+id/addButton"
+                style="@style/WidgetTitleButton"
+                android:contentDescription="@string/add"
+                android:src="@drawable/ic_add_box_white_24dp" />
+
+            <ImageButton
                 android:id="@+id/refreshButt"
                 style="@style/WidgetTitleButton"
                 android:contentDescription="@string/refresh"
